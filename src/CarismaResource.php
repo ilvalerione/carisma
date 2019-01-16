@@ -119,9 +119,9 @@ class CarismaResource extends JsonResource
     /**
      * Get string representation of the resource's timestamps
      *
-     * @return array
+     * @return mixed
      */
-    protected function timestamps() :array
+    protected function timestamps()
     {
         return $this->merge([
             'created_at' => $this->created_at->toDateTimeString(),
@@ -132,9 +132,9 @@ class CarismaResource extends JsonResource
     /**
      * Get string representation of the soft deleting date
      *
-     * @return array
+     * @return mixed
      */
-    protected function softDelete() :array
+    protected function softDelete()
     {
         return $this->merge([
             'deleted_at' => $this->deleted_at->toDateTimeString(),
