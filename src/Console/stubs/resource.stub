@@ -1,0 +1,37 @@
+<?php
+
+namespace DummyNamespace;
+
+use Carisma\CarismaResource;
+
+class DummyClass extends CarismaResource
+{
+    /**
+     * The model the resource corresponds to.
+     *
+     * @var string
+     */
+    public static $model = 'DummyFullModel';
+
+    /**
+     * Validation rules
+     *
+     * @var array
+     */
+    public static $roles = [
+        //'title' => 'required|max:255',
+    ];
+
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function toArray($request)
+    {
+        return [
+            'id' => $this->id,
+        ];
+    }
+}
