@@ -115,4 +115,29 @@ class CarismaResource extends JsonResource
     {
         return $request->all();
     }
+
+    /**
+     * Get string representation of the resource's timestamps
+     *
+     * @return array
+     */
+    protected function timestamps() :array
+    {
+        return [
+            'created_at' => $this->created_at->toDateTimeString(),
+            'updated_at' => $this->updated_at->toDateTimeString(),
+        ];
+    }
+
+    /**
+     * Get string representation of the soft deleting date
+     *
+     * @return array
+     */
+    protected function softDelete() :array
+    {
+        return [
+            'deleted_at' => $this->deleted_at->toDateTimeString(),
+        ];
+    }
 }
