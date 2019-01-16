@@ -123,10 +123,10 @@ class CarismaResource extends JsonResource
      */
     protected function timestamps() :array
     {
-        return [
+        return $this->merge([
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
-        ];
+        ]);
     }
 
     /**
@@ -136,8 +136,8 @@ class CarismaResource extends JsonResource
      */
     protected function softDelete() :array
     {
-        return [
+        return $this->merge([
             'deleted_at' => $this->deleted_at->toDateTimeString(),
-        ];
+        ]);
     }
 }
