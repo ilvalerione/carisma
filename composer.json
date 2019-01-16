@@ -12,7 +12,9 @@
     "require": {
         "php": ">=7.0.0",
         "illuminate/support": "5.*",
-        "symfony/finder": "^4.2"
+        "symfony/finder": "^4.2",
+        "symfony/console": "^4.2",
+        "illuminate/console": "^5.7"
     },
     "autoload": {
         "psr-4": {

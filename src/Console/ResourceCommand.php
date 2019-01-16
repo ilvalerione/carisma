@@ -80,7 +80,7 @@ class ResourceCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace.'\Http\Resources';
+        return $rootNamespace.'\\'.config('carisma.namespace');
     }
 
     /**
