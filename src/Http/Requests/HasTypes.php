@@ -1,6 +1,6 @@
 <?php
 
-namespace Carisma\Requests;
+namespace Carisma\Http\Requests;
 
 
 trait HasTypes

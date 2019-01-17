@@ -3,7 +3,7 @@
 namespace Carisma\Http\Controllers;
 
 
-use Carisma\Requests\CarismaRequest;
+use Carisma\Http\Requests\CarismaRequest;
 use Illuminate\Routing\Controller;
 
 class ShowController extends Controller

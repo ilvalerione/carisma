@@ -3,7 +3,7 @@
 namespace Carisma;
 
 
-use Carisma\Requests\CarismaRequest;
+use Carisma\Http\Requests\CarismaRequest;
 use Illuminate\Database\Eloquent\Model;
 
 trait HasHooks

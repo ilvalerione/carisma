@@ -4,7 +4,7 @@ namespace Carisma;
 
 
 use Carisma\Filters\Filter;
-use Carisma\Requests\CarismaRequest;
+use Carisma\Http\Requests\CarismaRequest;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CarismaResource extends JsonResource

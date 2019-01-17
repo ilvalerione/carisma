@@ -2,7 +2,7 @@
 
 namespace Carisma\Http\Controllers;
 
-use Carisma\Requests\CarismaRequest;
+use Carisma\Http\Requests\CarismaRequest;
 use Illuminate\Database\Eloquent\Model;
 
 trait HasManyToMany
