@@ -11,7 +11,7 @@ trait InteractWithFilters
      *
      * @return array
      */
-    public function filters() :array
+    public static function filters() :array
     {
         return [];
     }
@@ -24,7 +24,7 @@ trait InteractWithFilters
     public static function availableFilters()
     {
         $filters = [];
-        foreach (self::filters() as $filter) {
+        foreach (static::filters() as $filter) {
             $filters[$filter->name()] = $filter;
         }
         return $filters;

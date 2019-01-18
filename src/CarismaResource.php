@@ -57,7 +57,7 @@ abstract class CarismaResource extends JsonResource
         $data = [];
 
         foreach ($this->fields($request) as $field) {
-            $data[$field->name()] = $field->resolve();
+            $data[$field->name] = $field->resolve();
         }
 
         return $data;

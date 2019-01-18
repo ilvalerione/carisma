@@ -13,7 +13,7 @@ class Field
      *
      * @var string
      */
-    protected $name;
+    public $name;
 
     /**
      * The attribute / column name of the field.
