@@ -1,11 +1,11 @@
 <?php
 
-namespace {{ namespace }};
+namespace DummyNamespace;
 
 use Illuminate\Http\Request;
-use Carisma\Filter;
+use Laravel\Nova\Filters\Filter;
 
-class {{ class }} extends Filter
+class DummyClass extends Filter
 {
     /**
      * Apply the filter to the given query.
