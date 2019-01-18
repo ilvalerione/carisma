@@ -1,6 +1,6 @@
 <?php
 
-namespace Carisma;
+namespace Carisma\Fields;
 
 use Carisma\Http\Requests\CarismaRequest;
 use Illuminate\Contracts\Validation\Rule;
@@ -8,6 +8,8 @@ use Illuminate\Support\Str;
 
 class Field
 {
+    use DisplayOptions;
+
     /**
      * The displayable name of the field.
      *

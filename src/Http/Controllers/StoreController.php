@@ -25,7 +25,7 @@ class StoreController extends Controller
         //$resource::validateForCreating($request);
 
         //$model = $request->model()->fill($resource::getRequestParams($request));
-        $model = $resource::fill(
+        $model = $resource::fillForCreate(
             $request, $resource::newModel()
         );
 

@@ -2,6 +2,7 @@
 
 namespace Carisma;
 
+use Carisma\Fields\Field;
 use Carisma\Http\Requests\CarismaRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -140,14 +141,14 @@ abstract class CarismaResource extends JsonResource
      */
     protected function timestamps()
     {
-        return $this->merge([
+        return [
             Field::make('created_at')->resolveUsing(function($attribute){
                 return $attribute->toDateTimeString();
             }),
             Field::make('updated_at')->resolveUsing(function($attribute){
                 return $attribute->toDateTimeString();
             })
-        ]);
+        ];
     }
 
     /**
@@ -157,10 +158,8 @@ abstract class CarismaResource extends JsonResource
      */
     protected function softDelete()
     {
-        return $this->merge([
-            Field::make('deleted_at')->resolveUsing(function($attribute){
-                return $attribute->toDateTimeString();
-            })
-        ]);
+        return Field::make('deleted_at')->resolveUsing(function($attribute){
+            return $attribute->toDateTimeString();
+        });
     }
 }
