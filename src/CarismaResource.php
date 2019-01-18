@@ -57,7 +57,7 @@ abstract class CarismaResource extends JsonResource
         $data = [];
 
         foreach ($this->fields($request) as $field) {
-            $data[$field->name] = $field->resolve();
+            $data[$field->name] = $field->resolve($this);
         }
 
         return $data;
@@ -129,8 +129,12 @@ abstract class CarismaResource extends JsonResource
     protected function timestamps()
     {
         return $this->merge([
-            'created_at' => $this->created_at->toDateTimeString(),
-            'updated_at' => $this->updated_at->toDateTimeString(),
+            Field::make('created_at')->resolveUsing(function($attribute){
+                return $attribute->toDateTimeString();
+            }),
+            Field::make('updated_at')->resolveUsing(function($attribute){
+                return $attribute->toDateTimeString();
+            })
         ]);
     }
 
@@ -142,7 +146,9 @@ abstract class CarismaResource extends JsonResource
     protected function softDelete()
     {
         return $this->merge([
-            'deleted_at' => $this->deleted_at->toDateTimeString(),
+            Field::make('deleted_at')->resolveUsing(function($attribute){
+                return $attribute->toDateTimeString();
+            })
         ]);
     }
 }

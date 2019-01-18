@@ -82,16 +82,16 @@ class Field
     /**
      * Resolve the field's value.
      *
-     * @param mixed $model
+     * @param mixed $resource
      * @return mixed
      */
-    public function resolve($model)
+    public function resolve($resource)
     {
         if (is_callable($this->resolveCallback)) {
-            return call_user_func($this->resolveCallback, $model->{$this->attribute});
+            return call_user_func($this->resolveCallback, $resource->{$this->attribute});
         }
 
-        return $model->{$this->attribute};
+        return $resource->{$this->attribute};
     }
 
     /**
