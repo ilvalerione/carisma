@@ -33,6 +33,7 @@ trait InteractWithFilters
     /**
      * Apply filters to the model
      *
+     * @param Request $request
      * @param  \Illuminate\Database\Eloquent\Builder $query
      * @param array $filters
      * @return \Illuminate\Database\Eloquent\Builder

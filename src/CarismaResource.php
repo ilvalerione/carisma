@@ -104,6 +104,7 @@ abstract class CarismaResource extends JsonResource
     public static function buildIndexQuery(CarismaRequest $request)
     {
         return static::applyFilters(
+            $request,
             static::applySearch(static::newModel()->newQuery(), $request->search),
             $request->getFilters()
         );
