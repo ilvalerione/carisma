@@ -37,6 +37,13 @@ class Field
     protected $resolveCallback;
 
     /**
+     * The callback to be used to fill the field's value on the model's attribute.
+     *
+     * @var \Closure
+     */
+    protected $fillCallback;
+
+    /**
      * The validation rules for creation and updates.
      *
      * @var array
@@ -202,5 +209,47 @@ class Field
     public function getValidationAttribute(CarismaRequest $request)
     {
         return $this->validationAttribute ?? Str::singular($this->attribute);
+    }
+
+    /**
+     * Hydrate the given attribute on the model based on the incoming request.
+     *
+     * @param  \Carisma\Http\Requests\CarismaRequest  $request
+     * @param  object  $model
+     * @return mixed
+     */
+    public function fill(CarismaRequest $request, $model)
+    {
+        if (isset($this->fillCallback)) {
+            return $this->fillAttributeFromCallback($request, $model);
+        }
+
+        return $this->fillAttributeFromRequest($request, $model);
+    }
+
+    /**
+     * Hydrate the given attribute on the model based on the callback.
+     *
+     * @param CarismaRequest $request
+     * @param $model
+     * @return mixed
+     */
+    public function fillAttributeFromCallback(CarismaRequest $request, $model)
+    {
+        return call_user_func(
+            $this->fillCallback, $request, $model, $this->attribute
+        );
+    }
+
+    /**
+     * Hydrate the given attribute on the model based on the incoming request.
+     *
+     * @param  \Carisma\Http\Requests\CarismaRequest  $request
+     * @param  object  $model
+     * @return mixed
+     */
+    protected function fillAttributeFromRequest(CarismaRequest $request, $model)
+    {
+        return $model->{$this->attribute} = $request[$this->attribute];
     }
 }

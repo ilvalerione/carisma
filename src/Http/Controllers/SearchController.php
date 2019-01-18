@@ -19,7 +19,7 @@ class SearchController extends Controller
         $resource = $request->resource();
 
         return $resource::collection(
-            $resource::getFilteredQuery($request)->latest()->get()
+            $resource::buildIndexQuery($request)->latest()->get()
         );
     }
 }

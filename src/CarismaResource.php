@@ -13,6 +13,7 @@ abstract class CarismaResource extends JsonResource
         Authorizable,
         PerformValidation,
         PerformSearch,
+        FillFields,
         InteractWithFilters;
 
     /**
