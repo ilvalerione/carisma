@@ -47,6 +47,23 @@ abstract class CarismaResource extends JsonResource
     abstract public function fields(Request $request);
 
     /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function toArray($request)
+    {
+        $data = [];
+
+        foreach ($this->fields($request) as $field) {
+            $data[$field->name()] = $field->resolve();
+        }
+
+        return $data;
+    }
+
+    /**
      * Get the underlying model instance for the resource.
      *
      * @return \Illuminate\Database\Eloquent\Model

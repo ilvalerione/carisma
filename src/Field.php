@@ -3,7 +3,6 @@
 namespace Carisma;
 
 use Carisma\Http\Requests\CarismaRequest;
-use Closure;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Str;
 
@@ -83,33 +82,22 @@ class Field
     /**
      * Resolve the field's value.
      *
-     * @param  mixed  $resource
-     * @param  string|null  $attribute
-     * @return void
+     * @param mixed $model
+     * @return mixed
      */
-    public function resolve($resource, $attribute = null)
+    public function resolve($model)
     {
-        $attribute = $attribute ?? $this->attribute;
-
-        if ($attribute instanceof Closure || (is_callable($attribute) && is_object($attribute))) {
-            return $this->resolveComputedAttribute($attribute);
+        if (is_callable($this->resolveCallback)) {
+            return call_user_func($this->resolveCallback, $model->{$this->attribute});
         }
 
-        if (! $this->resolveCallback) {
-            $this->value = $this->resolveAttribute($resource, $attribute);
-        }
-
-        $value = data_get($resource, str_replace('->', '.', $attribute), '___missing');
-
-        if (is_callable($this->resolveCallback) && $value !== '___missing') {
-            $this->value = call_user_func($this->resolveCallback, $value, $resource);
-        }
+        return $model->{$this->attribute};
     }
 
     /**
      * Define the callback that should be used to resolve the field's value.
      *
-     * @param  callable  $resolveCallback
+     * @param  callable  $resolveCallback($modelAttribute)
      * @return $this
      */
     public function resolveUsing(callable $resolveCallback)
@@ -117,31 +105,6 @@ class Field
         $this->resolveCallback = $resolveCallback;
 
         return $this;
-    }
-
-    /**
-     * Resolve the given attribute from the given resource.
-     *
-     * @param  mixed  $resource
-     * @param  string  $attribute
-     * @return mixed
-     */
-    protected function resolveAttribute($resource, $attribute)
-    {
-        return data_get($resource, str_replace('->', '.', $attribute));
-    }
-
-    /**
-     * Resolve a computed attribute.
-     *
-     * @param  callable  $attribute
-     * @return void
-     */
-    protected function resolveComputedAttribute($attribute)
-    {
-        $this->value = $attribute();
-
-        $this->attribute = 'ComputedField';
     }
 
     /**
