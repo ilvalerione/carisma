@@ -18,20 +18,29 @@ class DummyClass extends CarismaResource
      *
      * @var array
      */
-    public static $roles = [
-        //'title' => 'required|max:255',
-    ];
+    public static $search = ['id'];
 
     /**
-     * Transform the resource into an array.
+     * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
-    public function toArray($request)
+    public function fields(Request $request)
     {
         return [
-            'id' => $this->id,
+            Field::make('id'),
+            $this->timestamps(),
         ];
+    }
+
+    /**
+     * Get the filters available for the resource.
+     *
+     * @return array
+     */
+    public static function filters(): array
+    {
+        return [];
     }
 }
