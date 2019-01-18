@@ -5,6 +5,7 @@ namespace Carisma;
 use Carisma\Http\Requests\CarismaRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\MergeValue;
 
 abstract class CarismaResource extends JsonResource
 {
@@ -57,7 +58,17 @@ abstract class CarismaResource extends JsonResource
         $data = [];
 
         foreach ($this->fields($request) as $field) {
-            $data[$field->name] = $field->resolve($this);
+            if ($field instanceof MergeValue) {
+                if (is_array($field->data)) {
+                    foreach ($field->data as $item) {
+                        $data[$item->name] = $item->resolve($this);
+                    }
+                } else {
+                    $data[$field->data->name] = $field->data->resolve($this);
+                }
+            } else {
+                $data[$field->name] = $field->resolve($this);
+            }
         }
 
         return $data;
