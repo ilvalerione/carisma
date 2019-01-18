@@ -39,7 +39,8 @@ class ServiceProvider extends IlluminateServiceProvider
 
         // Artisan Commands
         $this->commands([
-            \Carisma\Console\ResourceCommand::class
+            \Carisma\Console\ResourceCommand::class,
+            \Carisma\Console\FilterCommand::class,
         ]);
     }
 }

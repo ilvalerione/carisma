@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Nova\Console;
+namespace Carisma\Console;
 
 use Illuminate\Console\GeneratorCommand;
 
