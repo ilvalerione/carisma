@@ -21,7 +21,7 @@ class Field
      *
      * @var string
      */
-    public $attribute;
+    protected $attribute;
 
     /**
      * The field's resolved value.
@@ -35,28 +35,28 @@ class Field
      *
      * @var \Closure
      */
-    public $resolveCallback;
+    protected $resolveCallback;
 
     /**
      * The validation rules for creation and updates.
      *
      * @var array
      */
-    public $rules = [];
+    protected $rules = [];
 
     /**
      * The validation rules for creation.
      *
      * @var array
      */
-    public $creationRules = [];
+    protected $creationRules = [];
 
     /**
      * The validation rules for updates.
      *
      * @var array
      */
-    public $updateRules = [];
+    protected $updateRules = [];
 
     /**
      * Field constructor.
@@ -67,15 +67,15 @@ class Field
     public function __construct($name, $attribute = null)
     {
         $this->name = $name;
-        $this->attribute = $attribute;
+        $this->attribute = $attribute ?: $name;
     }
 
     /**
      * Create a new Field.
      *
-     * @return static
+     * @return Field
      */
-    public static function make(...$arguments)
+    public static function make(...$arguments) :Field
     {
         return new static(...$arguments);
     }
@@ -104,6 +104,19 @@ class Field
         if (is_callable($this->resolveCallback) && $value !== '___missing') {
             $this->value = call_user_func($this->resolveCallback, $value, $resource);
         }
+    }
+
+    /**
+     * Define the callback that should be used to resolve the field's value.
+     *
+     * @param  callable  $resolveCallback
+     * @return $this
+     */
+    public function resolveUsing(callable $resolveCallback)
+    {
+        $this->resolveCallback = $resolveCallback;
+
+        return $this;
     }
 
     /**

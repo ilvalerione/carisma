@@ -2,16 +2,17 @@
 
 namespace Carisma;
 
-
-use Carisma\Filters\Filter;
 use Carisma\Http\Requests\CarismaRequest;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CarismaResource extends JsonResource
+abstract class CarismaResource extends JsonResource
 {
     use HasHooks,
         Authorizable,
-        PerformValidation;
+        PerformValidation,
+        PerformSearch,
+        InteractWithFilters;
 
     /**
      * The underlying model resource instance.
@@ -28,29 +29,6 @@ class CarismaResource extends JsonResource
     public static $model;
 
     /**
-     * Eloquent model filter
-     *
-     * @var Filter
-     */
-    public static $filter;
-
-    /**
-     * Validation rules
-     *
-     * @var array
-     */
-    public static $rules = [];
-    public static $creationRules = [];
-    public static $updatingRules = [];
-
-    /**
-     * ManyToMany relations method to call when create and update resource
-     *
-     * @var string|array
-     */
-    public static $manyToManyKeys = [];
-
-    /**
      * CarismaResource constructor.
      *
      * @param $resource
@@ -59,6 +37,14 @@ class CarismaResource extends JsonResource
     {
         $this->resource = $resource;
     }
+
+    /**
+     * Get the fields displayed by the resource.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return array
+     */
+    abstract public function fields(Request $request);
 
     /**
      * Get the underlying model instance for the resource.
@@ -98,11 +84,12 @@ class CarismaResource extends JsonResource
      * @param CarismaRequest $request
      * @return mixed
      */
-    public static function getFilteredQuery(CarismaRequest $request)
+    public static function buildIndexQuery(CarismaRequest $request)
     {
-        return (isset(static::$filter) && is_a(static::$filter, Filter::class, true))
-            ? static::newModel()->filter($request->getFilters(), static::$filter)
-            : static::newModel();
+        return static::applyFilters(
+            static::applySearch(static::newModel()->newQuery(), $request->search),
+            $request->getFilters()
+        );
     }
 
     /**
