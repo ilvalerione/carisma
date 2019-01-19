@@ -45,7 +45,8 @@ trait FillFields
     public static function fillForUpdate(Request $request, $model)
     {
         static::fillFields(
-            $request, $model,
+            $request,
+            $model,
             (new static($model))->updateFields($request)
         );
 
@@ -58,11 +59,11 @@ trait FillFields
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @param  \Illuminate\Support\Collection  $fields
-     * @return array
+     * @return void
      */
     protected static function fillFields(Request $request, $model, $fields)
     {
-        return $fields->map->fill($request, $model)->values()->all();
+        $fields->map->fill($request, $model);
     }
 
     /**
