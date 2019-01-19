@@ -59,18 +59,8 @@ abstract class CarismaResource extends JsonResource
     {
         $data = [];
 
-        foreach ($this->fields($request) as $field) {
-            if ($field instanceof MergeValue) {
-                if (is_array($field->data)) {
-                    foreach ($field->data as $item) {
-                        $data[$item->name] = $item->resolve($this);
-                    }
-                } else {
-                    $data[$field->data->name] = $field->data->resolve($this);
-                }
-            } else {
-                $data[$field->name] = $field->resolve($this);
-            }
+        foreach ($this->filter($this->fields($request)) as $field) {
+            $data[$field->name] = $field->resolve($this);
         }
 
         return $data;

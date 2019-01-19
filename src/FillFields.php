@@ -2,19 +2,30 @@
 
 namespace Carisma;
 
-
-use Carisma\Http\Requests\CarismaRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 trait FillFields
 {
     /**
+     * Get the fields that are available for the given request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Support\Collection
+     */
+    public function availableFields(Request $request)
+    {
+        return collect($this->filter($this->fields($request)));
+    }
+
+    /**
      * Fill a new model instance using the given request.
      *
-     * @param  \Carisma\Http\Requests\CarismaRequest $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Model $model
      * @return mixed
      */
-    public static function fillForCreate(CarismaRequest $request, $model)
+    public static function fillForCreate(Request $request, $model)
     {
         static::fillFields(
             $request, $model,
@@ -27,11 +38,11 @@ trait FillFields
     /**
      * Fill a new model instance using the given request.
      *
-     * @param  \Carisma\Http\Requests\CarismaRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return mixed
      */
-    public static function fillForUpdate(CarismaRequest $request, $model)
+    public static function fillForUpdate(Request $request, $model)
     {
         static::fillFields(
             $request, $model,
@@ -44,13 +55,61 @@ trait FillFields
     /**
      * Fill the given fields for the model.
      *
-     * @param  \Carisma\Http\Requests\CarismaRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @param  \Illuminate\Support\Collection  $fields
      * @return array
      */
-    protected static function fillFields(CarismaRequest $request, $model, $fields)
+    protected static function fillFields(Request $request, $model, $fields)
     {
         return $fields->map->fill($request, $model)->values()->all();
+    }
+
+    /**
+     * Resolve the creation fields.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Support\Collection
+     */
+    public function creationFields(Request $request)
+    {
+        return $this->removeNonCreationFields($this->availableFields($request));
+    }
+
+    /**
+     * Remove non-creation fields from the given collection.
+     *
+     * @param  \Illuminate\Support\Collection  $fields
+     * @return \Illuminate\Support\Collection
+     */
+    protected function removeNonCreationFields(Collection $fields)
+    {
+        return $fields->reject(function ($field) {
+            return ! $field->showOnCreation;
+        });
+    }
+
+    /**
+     * Resolve the update fields.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Support\Collection
+     */
+    public function updateFields(Request $request)
+    {
+        return $this->removeNonUpdateFields($this->availableFields($request));
+    }
+
+    /**
+     * Remove non-update fields from the given collection.
+     *
+     * @param  \Illuminate\Support\Collection  $fields
+     * @return \Illuminate\Support\Collection
+     */
+    protected function removeNonUpdateFields(Collection $fields)
+    {
+        return $fields->reject(function ($field) {
+            return ! $field->showOnUpdate;
+        });
     }
 }
