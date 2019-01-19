@@ -4,6 +4,7 @@ namespace Carisma\Fields;
 
 use Carisma\Http\Requests\CarismaRequest;
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class Field
@@ -216,11 +217,11 @@ class Field
     /**
      * Hydrate the given attribute on the model based on the incoming request.
      *
-     * @param  \Carisma\Http\Requests\CarismaRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  object  $model
      * @return mixed
      */
-    public function fill(CarismaRequest $request, $model)
+    public function fill(Request $request, $model)
     {
         if (isset($this->fillCallback)) {
             return $this->fillAttributeFromCallback($request, $model);
@@ -232,11 +233,11 @@ class Field
     /**
      * Hydrate the given attribute on the model based on the callback.
      *
-     * @param CarismaRequest $request
+     * @param  \Illuminate\Http\Request  $request
      * @param $model
      * @return mixed
      */
-    public function fillAttributeFromCallback(CarismaRequest $request, $model)
+    public function fillAttributeFromCallback(Request $request, $model)
     {
         return call_user_func(
             $this->fillCallback, $request, $model, $this->attribute
@@ -246,12 +247,14 @@ class Field
     /**
      * Hydrate the given attribute on the model based on the incoming request.
      *
-     * @param  \Carisma\Http\Requests\CarismaRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  object  $model
-     * @return mixed
+     * @return void
      */
-    protected function fillAttributeFromRequest(CarismaRequest $request, $model)
+    protected function fillAttributeFromRequest(Request $request, $model)
     {
-        return $model->{$this->attribute} = $request[$this->attribute];
+        if($request->exists($this->attribute)){
+            $model->{$this->attribute} = $request[$this->attribute];
+        }
     }
 }
