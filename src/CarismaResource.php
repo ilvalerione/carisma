@@ -59,7 +59,7 @@ abstract class CarismaResource extends JsonResource
     {
         $data = [];
 
-        foreach ($this->filter($this->fields($request)) as $field) {
+        foreach ($this->availableFields($request) as $field) {
             $data[$field->name] = $field->resolve($this);
         }
 
@@ -119,10 +119,10 @@ abstract class CarismaResource extends JsonResource
      * @param CarismaRequest $request
      * @return array
      */
-    public static function getRequestParams(CarismaRequest $request)
+    /*public static function getRequestParams(CarismaRequest $request)
     {
         return $request->all();
-    }
+    }*/
 
     /**
      * Get string representation of the resource's timestamps

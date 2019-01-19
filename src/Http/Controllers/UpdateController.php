@@ -24,11 +24,14 @@ class UpdateController extends Controller
 
         $resource = $request->resource();
 
-        $resource::validateForUpdating($request);
+        //$resource::validateForUpdating($request);
 
         $model = $resource::newModel()->findOrFail($id);
 
-        $model->fill($resource::getRequestParams($request));
+        //$model->fill($resource::getRequestParams($request));
+        $model = $resource::fillForUpdate(
+            $request, $resource::newModel()
+        );
 
         $resource::onSaving($request, $model);
         $resource::onUpdating($request, $model);
