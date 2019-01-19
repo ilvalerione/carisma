@@ -114,17 +114,6 @@ abstract class CarismaResource extends JsonResource
     }
 
     /**
-     * Custom params list
-     *
-     * @param CarismaRequest $request
-     * @return array
-     */
-    /*public static function getRequestParams(CarismaRequest $request)
-    {
-        return $request->all();
-    }*/
-
-    /**
      * Get string representation of the resource's timestamps
      *
      * @return mixed

@@ -22,12 +22,9 @@ class StoreController extends Controller
 
         $resource::authorizeToCreate($request);
 
-        //$resource::validateForCreating($request);
+        $resource::validateForCreate($request);
 
-        //$model = $request->model()->fill($resource::getRequestParams($request));
-        $model = $resource::fillForCreate(
-            $request, $resource::newModel()
-        );
+        $model = $resource::fillForCreate($request, $resource::newModel());
 
         $resource::onSaving($request, $model);
         $resource::onCreating($request, $model);

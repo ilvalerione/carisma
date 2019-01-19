@@ -14,14 +14,18 @@ trait PerformValidation
      * @param CarismaRequest $request
      * @return array
      */
-    public static function validateForCreating(CarismaRequest $request)
+    public static function validateForCreate(CarismaRequest $request)
     {
         return Validator::make(
             $request->all(),
-            array_merge(static::$rules, static::$creationRules)
+            (new static(static::newModel()))
+                ->creationFields($request)
+                ->mapWithKeys(function ($field) use ($request) {
+                    return $field->getCreationRules($request);
+                })->all()
         )->after(function ($validator) use ($request) {
             static::afterValidation($request, $validator);
-            static::afterCreationValidation($request, $validator);
+            static::afterValidationOnCreate($request, $validator);
         })->validate();
     }
 
@@ -31,21 +35,26 @@ trait PerformValidation
      * @param CarismaRequest $request
      * @return array
      */
-    public static function validateForUpdating(CarismaRequest $request)
+    public static function validateForUpdate(CarismaRequest $request)
     {
         return Validator::make(
             $request->all(),
-            array_merge(static::$rules, static::$updatingRules)
+            (new static(static::newModel()))
+                ->updateFields($request)
+                ->mapWithKeys(function ($field) use ($request) {
+                    return $field->getUpdateRules($request);
+                })->all()
         )->after(function ($validator) use ($request) {
             static::afterValidation($request, $validator);
-            static::afterUpdateValidation($request, $validator);
+            static::afterValidationOnUpdate($request, $validator);
         })->validate();
     }
 
     /**
      * Handle any post-validation processing.
      *
-     * @param  \Illuminate\Validation\Validator  $validator
+     * @param CarismaRequest $request
+     * @param  \Illuminate\Validation\Validator $validator
      * @return void
      */
     protected static function afterValidation(CarismaRequest $request, $validator)
@@ -56,10 +65,11 @@ trait PerformValidation
     /**
      * Handle any post-creation validation processing.
      *
-     * @param  \Illuminate\Validation\Validator  $validator
+     * @param CarismaRequest $request
+     * @param  \Illuminate\Validation\Validator $validator
      * @return void
      */
-    protected static function afterCreationValidation(CarismaRequest $request, $validator)
+    protected static function afterValidationOnCreate(CarismaRequest $request, $validator)
     {
         //
     }
@@ -70,7 +80,7 @@ trait PerformValidation
      * @param  \Illuminate\Validation\Validator  $validator
      * @return void
      */
-    protected static function afterUpdateValidation(CarismaRequest $request, $validator)
+    protected static function afterValidationOnUpdate(CarismaRequest $request, $validator)
     {
         //
     }
