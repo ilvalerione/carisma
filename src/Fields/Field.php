@@ -219,15 +219,15 @@ class Field
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  object  $model
-     * @return mixed
+     * @return void
      */
     public function fill(Request $request, $model)
     {
         if (isset($this->fillCallback)) {
-            return $this->fillAttributeFromCallback($request, $model);
+            $this->fillAttributeFromCallback($request, $model);
         }
 
-        return $this->fillAttributeFromRequest($request, $model);
+        $this->fillAttributeFromRequest($request, $model);
     }
 
     /**
@@ -235,11 +235,11 @@ class Field
      *
      * @param  \Illuminate\Http\Request  $request
      * @param $model
-     * @return mixed
+     * @return void
      */
     public function fillAttributeFromCallback(Request $request, $model)
     {
-        return call_user_func(
+        call_user_func(
             $this->fillCallback, $request, $model, $this->attribute
         );
     }
