@@ -2,6 +2,7 @@
 
 namespace Carisma;
 
+use Carisma\Fields\DateTime;
 use Carisma\Fields\Field;
 use Carisma\Http\Requests\CarismaRequest;
 use Illuminate\Http\Request;
@@ -143,12 +144,8 @@ abstract class CarismaResource extends JsonResource
     protected function timestamps()
     {
         return [
-            Field::make('created_at')->resolveUsing(function ($attribute) {
-                return $attribute->toDateTimeString();
-            }),
-            Field::make('updated_at')->resolveUsing(function ($attribute) {
-                return $attribute->toDateTimeString();
-            })
+            DateTime::make('created_at'),
+            DateTime::make('updated_at'),
         ];
     }
 
@@ -159,8 +156,6 @@ abstract class CarismaResource extends JsonResource
      */
     protected function softDelete()
     {
-        return Field::make('deleted_at')->resolveUsing(function ($attribute) {
-            return $attribute->toDateTimeString();
-        });
+        return DateTime::make('deleted_at');
     }
 }

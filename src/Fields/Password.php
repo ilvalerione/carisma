@@ -44,7 +44,7 @@ class Password extends Field
         // This check is needed to preserve current password value
         // in case in the request is sent an empty value
         if (! empty($request->{$this->attribute})) {
-            $model->{$attribute} = Hash::make($request[$this->attribute]);
+            $model->{$this->attribute} = Hash::make($request[$this->attribute]);
         }
     }
 }
