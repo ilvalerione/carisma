@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CarismaRequest extends FormRequest
 {
-    use HasTypes, InteractWithResource;
+    use InteractWithResource;
 
     public function authorize()
     {

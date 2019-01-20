@@ -60,14 +60,4 @@ trait InteractWithResource
 
         return $resource::newModel();
     }
-
-    /**
-     * QueryBuilder by resource model
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function newQuery()
-    {
-        return $this->model()->newQuery();
-    }
 }
