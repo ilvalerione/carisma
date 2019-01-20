@@ -15,7 +15,56 @@ trait FillFields
      */
     public function availableFields(Request $request)
     {
+        // todo: iterate al fields to reject not autorized
         return collect($this->filter($this->fields($request)));
+    }
+
+    /**
+     * Resolve the index fields.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Support\Collection
+     */
+    public function indexFields($request)
+    {
+        return $this->removeNonIndexFields($this->availableFields($request));
+    }
+
+    /**
+     * Remove non-index fields from the given collection.
+     *
+     * @param Collection $fields
+     * @return Collection
+     */
+    protected function removeNonIndexFields(Collection $fields)
+    {
+        return $fields->reject(function ($field) {
+            return ! $field->showOnIndex;
+        });
+    }
+
+    /**
+     * Resolve the detail fields.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Support\Collection
+     */
+    public function detailsFields($request)
+    {
+        return $this->removeNonDetailFields($this->availableFields($request));
+    }
+
+    /**
+     * Remove non-detail fields from the given collection.
+     *
+     * @param Collection $fields
+     * @return Collection
+     */
+    protected function removeNonDetailFields(Collection $fields)
+    {
+        return $fields->reject(function ($field) {
+            return ! $field->showOnDetail;
+        });
     }
 
     /**

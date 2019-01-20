@@ -17,6 +17,6 @@ class ShowController extends Controller
      */
     public function index(CarismaRequest $request, $resource, $id)
     {
-        return $request->findResourceOrFail($id);
+        return $request->findResourceOrFail($id)->serializeForDetails($request);
     }
 }

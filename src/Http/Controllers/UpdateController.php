@@ -8,8 +8,6 @@ use Illuminate\Routing\Controller;
 
 class UpdateController extends Controller
 {
-    use HasManyToMany;
-
     /**
      * Update the specified resource in storage.
      *
@@ -36,6 +34,6 @@ class UpdateController extends Controller
         $resource::onUpdated($request, $model);
         $resource::onSaved($request, $model);
 
-        return $request->newResource($id);
+        return $request->newResource($id)->serializeForDetails($request);
     }
 }

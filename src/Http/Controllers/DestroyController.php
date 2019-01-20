@@ -27,6 +27,6 @@ class DestroyController extends Controller
         $instance->delete();
         $resource::onDeleted($request, $instance);
 
-        return new $resource($instance);
+        return (new $resource($instance))->serializeForDetails($request);
     }
 }

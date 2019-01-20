@@ -20,6 +20,6 @@ class SearchController extends Controller
 
         return $resource::collection(
             $resource::buildIndexQuery($request)->latest()->get()
-        );
+        )->map->serializeForIndex($request);
     }
 }

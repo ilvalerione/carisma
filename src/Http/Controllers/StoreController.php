@@ -8,8 +8,6 @@ use Illuminate\Routing\Controller;
 
 class StoreController extends Controller
 {
-    use HasManyToMany;
-
     /**
      * Store a newly created resource in storage.
      *
@@ -32,6 +30,6 @@ class StoreController extends Controller
         $resource::onCreated($request, $model);
         $resource::onSaved($request, $model);
 
-        return $request->newResource($model->id);
+        return $request->newResource($model->id)->serializeForDetails($request);
     }
 }

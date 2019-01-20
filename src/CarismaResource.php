@@ -6,7 +6,6 @@ use Carisma\Fields\Field;
 use Carisma\Http\Requests\CarismaRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Resources\MergeValue;
 
 abstract class CarismaResource extends JsonResource
 {
@@ -52,19 +51,42 @@ abstract class CarismaResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)
     {
-        $data = [];
-
-        foreach ($this->availableFields($request) as $field) {
-            $data[$field->name] = $field->resolve($this);
-        }
-
-        return $data;
+        return $this->availableFields($request)->mapWithKeys(function ($field) {
+            return [$field->name => $field->resolve($this)];
+        })->all();
     }
+
+    /**
+     * Prepare the resource for JSON serialization.
+     *
+     * @param $request
+     * @return array
+     */
+    public function serializeForIndex($request)
+    {
+        return $this->indexFields($request)->mapWithKeys(function ($field) {
+            return [$field->name => $field->resolve($this)];
+        })->all();
+    }
+
+    /**
+     * Prepare the resource for JSON serialization.
+     *
+     * @param $request
+     * @return array
+     */
+    public function serializeForDetails($request)
+    {
+        return $this->detailsFields($request)->mapWithKeys(function ($field) {
+            return [$field->name => $field->resolve($this)];
+        })->all();
+    }
+
 
     /**
      * Get the underlying model instance for the resource.
@@ -121,10 +143,10 @@ abstract class CarismaResource extends JsonResource
     protected function timestamps()
     {
         return [
-            Field::make('created_at')->resolveUsing(function($attribute){
+            Field::make('created_at')->resolveUsing(function ($attribute) {
                 return $attribute->toDateTimeString();
             }),
-            Field::make('updated_at')->resolveUsing(function($attribute){
+            Field::make('updated_at')->resolveUsing(function ($attribute) {
                 return $attribute->toDateTimeString();
             })
         ];
@@ -137,7 +159,7 @@ abstract class CarismaResource extends JsonResource
      */
     protected function softDelete()
     {
-        return Field::make('deleted_at')->resolveUsing(function($attribute){
+        return Field::make('deleted_at')->resolveUsing(function ($attribute) {
             return $attribute->toDateTimeString();
         });
     }

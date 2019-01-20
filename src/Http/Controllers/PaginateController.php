@@ -19,7 +19,9 @@ class PaginateController extends Controller
         $resource = $request->resource();
 
         return $resource::collection(
-            $resource::buildIndexQuery($request)->latest()->paginate($request->perPage ?? 25)
-        );
+            $resource::buildIndexQuery($request)
+                ->latest()
+                ->paginate($request->perPage ?? 25)
+        )->map->serializieForIndex($request);
     }
 }
