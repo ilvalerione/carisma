@@ -22,6 +22,8 @@ class PaginateController extends Controller
             $resource::buildIndexQuery($request)
                 ->latest()
                 ->paginate($request->perPage ?? 25)
-        )->map->serializieForIndex($request);
+        )->map(function ($resource) use ($request){
+            return $resource->serializeForIndex($request);
+        });
     }
 }
