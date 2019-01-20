@@ -17,7 +17,7 @@ class DateTime extends Field
     {
         parent::__construct($name, $attribute);
 
-        $this->fillUsing(function ($value) {
+        $this->resolveUsing(function ($value) {
             if (! $value instanceof DateTimeInterface) {
                 throw new Exception("DateTime field must cast to 'datetime' in Eloquent model.");
             }
