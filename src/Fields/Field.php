@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 class Field
 {
-    use DisplayOptions;
+    use DisplayOptions, Authorization;
 
     /**
      * The displayable name of the field.

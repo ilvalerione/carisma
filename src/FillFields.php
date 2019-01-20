@@ -27,19 +27,8 @@ trait FillFields
      */
     public function indexFields($request)
     {
-        return $this->removeNonIndexFields($this->availableFields($request));
-    }
-
-    /**
-     * Remove non-index fields from the given collection.
-     *
-     * @param Collection $fields
-     * @return Collection
-     */
-    protected function removeNonIndexFields(Collection $fields)
-    {
-        return $fields->reject(function ($field) {
-            return ! $field->showOnIndex;
+        return $this->availableFields($request)->reject(function ($field) use ($request){
+            return ! $field->showOnIndex || ! $field->authorize($request);
         });
     }
 
@@ -51,19 +40,8 @@ trait FillFields
      */
     public function detailsFields($request)
     {
-        return $this->removeNonDetailFields($this->availableFields($request));
-    }
-
-    /**
-     * Remove non-detail fields from the given collection.
-     *
-     * @param Collection $fields
-     * @return Collection
-     */
-    protected function removeNonDetailFields(Collection $fields)
-    {
-        return $fields->reject(function ($field) {
-            return ! $field->showOnDetail;
+        return $this->availableFields($request)->reject(function ($field) use ($request){
+            return ! $field->showOnDetail || ! $field->authorize($request);
         });
     }
 
