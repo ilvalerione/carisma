@@ -71,7 +71,7 @@ class Field
      * Field constructor.
      *
      * @param string $name
-     * @param mixed $attribute
+     * @param string $attribute
      */
     public function __construct($name, $attribute = null)
     {
@@ -228,6 +228,19 @@ class Field
         }
 
         $this->fillAttributeFromRequest($request, $model);
+    }
+
+    /**
+     * Specify a callback that should be used to hydrate the model attribute for the field.
+     *
+     * @param  callable  $fillCallback
+     * @return $this
+     */
+    public function fillUsing($fillCallback)
+    {
+        $this->fillCallback = $fillCallback;
+
+        return $this;
     }
 
     /**

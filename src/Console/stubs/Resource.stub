@@ -3,6 +3,7 @@
 namespace DummyNamespace;
 
 use Carisma\CarismaResource;
+use Carisma\Fields\Field;
 
 class DummyClass extends CarismaResource
 {
@@ -29,8 +30,11 @@ class DummyClass extends CarismaResource
     public function fields(Request $request)
     {
         return [
-            Field::make('id'),
-            $this->timestamps(),
+            Field::make('id')->onlyOnIndex(),
+
+            // Field::make('email')->rules('required', 'email'),
+
+            $this->merge($this->timestamps()),
         ];
     }
 
