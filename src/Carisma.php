@@ -95,7 +95,6 @@ class Carisma
      */
     public function routes()
     {
-        Route::get('{resource}/search', 'Carisma\Http\Controllers\SearchController@index');
         Route::get('{resource}', 'Carisma\Http\Controllers\PaginateController@index');
         Route::get('{resource}/{id}', 'Carisma\Http\Controllers\ShowController@index');
         Route::post('{resource}', 'Carisma\Http\Controllers\StoreController@index');

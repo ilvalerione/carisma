@@ -2,40 +2,47 @@
 
 namespace Carisma\Filters;
 
-use Carbon\Carbon;
-use EloquentFilter\ModelFilter;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
-abstract class Filter extends ModelFilter
+abstract class Filter
 {
-    use Orderable;
+    /**
+     * The name of the action.
+     *
+     * @var string
+     */
+    protected $name;
 
     /**
-     * Search by query string
+     * Get the name of the filter.
      *
-     * @param $q
-     * @return \Illuminate\Database\Query\Builder|static
+     * @return string
      */
-    public abstract function q($q);
-
-    public function createdAt($value)
+    public function name()
     {
-        return $this->filterAsDate('created_at', $value);
+        return $this->name ?: $this->humanize();
     }
 
-    public function updatedAt($value)
-    {
-        return $this->filterAsDate('updated_at', $value);
-    }
+    /**
+     * Apply the filter to the given query.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  mixed  $value
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    abstract public function apply(Request $request, $query, $value);
 
-    public function filterAsDate($field, $value)
+    /**
+     * Humanize the class name into a string.
+     *
+     * @return string
+     */
+    protected function humanize() :string
     {
-        $param = $value instanceof Carbon ? $value : Carbon::parse($value);
-        return $this->whereDate($field, $param->format('Y-m-d'));
-    }
-
-    public function filterAsDatetime($field, $value)
-    {
-        $param = $value instanceof Carbon ? $value : Carbon::parse($value);
-        return $this->where($field, $param);
+        return strtolower(
+            Str::snake(class_basename(get_class($this)))
+        );
     }
 }
