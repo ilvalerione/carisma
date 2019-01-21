@@ -3,7 +3,6 @@
 namespace Carisma;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 
 trait InteractWithFilters
 {
