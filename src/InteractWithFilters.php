@@ -25,8 +25,11 @@ trait InteractWithFilters
      */
     public static function availableFilters($request)
     {
-        return collect(static::filters($request))->mapWithKeys(function ($filter) {
-            return [$filter->name() => $filter];
-        });
+        return collect(static::filters($request))
+            ->filter
+            ->authorizedToRun($request)
+            ->mapWithKeys(function ($filter) {
+                return [$filter->name() => $filter];
+            });
     }
 }

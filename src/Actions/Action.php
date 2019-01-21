@@ -5,7 +5,6 @@ namespace Carisma\Actions;
 use Carisma\Http\Requests\ActionRequest;
 use Illuminate\Http\Request;
 use Closure;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 abstract class Action
@@ -80,6 +79,19 @@ abstract class Action
         }
 
         return $model->whereKey(explode(',', $request->ids))->get();
+    }
+
+    /**
+     * Set the callback to be run to authorize running the action.
+     *
+     * @param  \Closure  $runCallback
+     * @return $this
+     */
+    public function canRun(Closure $runCallback)
+    {
+        $this->runCallback = $runCallback;
+
+        return $this;
     }
 
     /**
