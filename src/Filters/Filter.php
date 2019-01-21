@@ -15,6 +15,16 @@ abstract class Filter
     protected $name;
 
     /**
+     * Filter constructor.
+     *
+     * @param null $name
+     */
+    public function __construct($name = null)
+    {
+        $this->name = $name;
+    }
+
+    /**
      * Get the name of the filter.
      *
      * @return string

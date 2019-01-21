@@ -25,6 +25,16 @@ abstract class Action
     protected $runCallback;
 
     /**
+     * Action constructor.
+     *
+     * @param null $name
+     */
+    public function __construct($name = null)
+    {
+        $this->name = $name;
+    }
+
+    /**
      * Get the name of the filter.
      *
      * @return string
@@ -49,7 +59,7 @@ abstract class Action
      * @param  \Carisma\Http\Requests\ActionRequest  $request
      * @return mixed
      */
-    public function handleAction(ActionRequest $request)
+    public function handleRequest(ActionRequest $request)
     {
         return $this->run($request, $this->selectedEntities($request));
     }
@@ -76,12 +86,11 @@ abstract class Action
      * Determine if the action is executable for the given request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return bool
      */
-    public function authorizedToRun(Request $request, $model)
+    public function authorizedToRun(Request $request)
     {
-        return $this->runCallback ? call_user_func($this->runCallback, $request, $model) : true;
+        return $this->runCallback ? call_user_func($this->runCallback, $request) : true;
     }
 
     /**

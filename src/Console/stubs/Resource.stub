@@ -46,7 +46,9 @@ class DummyClass extends CarismaResource
      */
     public static function filters(Request $request): array
     {
-        return [];
+        return [
+            // new MyFilter('name'),
+        ];
     }
 
     /**
@@ -57,6 +59,8 @@ class DummyClass extends CarismaResource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            // new MyAction('name'),
+        ];
     }
 }

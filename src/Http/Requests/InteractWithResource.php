@@ -31,8 +31,8 @@ trait InteractWithResource
 
         return new $resource(
             !is_null($primaryKey)
-                ? $this->model()->findOrFail($primaryKey)
-                : $resource->model()
+                ? $resource::newModel()->findOrFail($primaryKey)
+                : $resource::newModel()
         );
     }
 
