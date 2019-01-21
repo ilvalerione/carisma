@@ -19,7 +19,7 @@ class FilterController extends Controller
 
         return $resource::collection(
             $request->filter()
-                ->apply($request, $resource::buildIndexQuery($request))
+                ->apply($request, $resource::newModel()->newQuery())
                 ->paginate($request->perPage ?? 25)
         )->map(function ($resource) use ($request){
             return $resource->serializeForIndex($request);

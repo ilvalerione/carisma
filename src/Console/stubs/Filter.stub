@@ -2,7 +2,7 @@
 
 namespace DummyNamespace;
 
-use Illuminate\Http\Request;
+use Carisma\Http\Requests\FilterRequest;
 use Carisma\Filters\Filter;
 
 class DummyClass extends Filter
@@ -10,12 +10,11 @@ class DummyClass extends Filter
     /**
      * Apply the filter to the given query.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Carisma\Http\Requests\FilterRequest  $request
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  mixed  $value
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function apply(Request $request, $query, $value)
+    public function apply(FilterRequest $request, $query)
     {
         return $query;
     }

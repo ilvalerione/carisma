@@ -12,7 +12,6 @@ trait PerformSearch
         'gte' => '>=',
         'lt' => '<',
         'lte' => '<=',
-        'like' => 'like',
     ];
 
     /**
