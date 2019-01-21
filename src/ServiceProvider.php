@@ -13,13 +13,13 @@ class ServiceProvider extends IlluminateServiceProvider
      */
     public function boot()
     {
-        /*if (! $this->app->configurationIsCached()) {
+        if (! $this->app->configurationIsCached()) {
             $this->mergeConfigFrom(__DIR__.'/../config/carisma.php', 'carisma');
-        }*/
+        }
 
-        /*$this->publishes([
-            __DIR__.'/../resources/lang' => resource_path('lang/vendor/carisma'),
-        ], 'carisma-lang');*/
+        $this->publishes([
+            __DIR__.'/../resources/docs' => resource_path('docs'),
+        ], 'docs');
     }
 	
     /**
@@ -33,9 +33,6 @@ class ServiceProvider extends IlluminateServiceProvider
         $this->app->singleton(\Carisma\Carisma::class, function($app){
             return new \Carisma\Carisma();
         });
-
-
-        //$this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'carisma');
 
         // Artisan Commands
         $this->commands([
