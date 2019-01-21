@@ -16,10 +16,6 @@ class ServiceProvider extends IlluminateServiceProvider
         if (! $this->app->configurationIsCached()) {
             $this->mergeConfigFrom(__DIR__.'/../config/carisma.php', 'carisma');
         }
-
-        $this->publishes([
-            __DIR__.'/../resources/docs' => resource_path('docs'),
-        ], 'docs');
     }
 	
     /**
