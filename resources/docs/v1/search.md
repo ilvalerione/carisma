@@ -33,7 +33,21 @@ axios.get('users', {
 });
 ```
 
+### Supported operator
+```php
+[
+    'eq' => '=',
+    'neq' => '!=',
+    'gt' => '>',
+    'gte' => '>=',
+    'lt' => '<',
+    'lte' => '<=',
+]
+```
 
 **Attention:** using multiple operators for the same property result in an implicit AND. 
+
 What if the API user wanted to OR the filters instead. i.e. find all items where price 
 is less than 10 OR greater than 100?
+
+You can use (custom filters)[filters.md] to develop your custom logic.
