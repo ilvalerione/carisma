@@ -67,7 +67,7 @@ abstract class Filter
     protected function humanize() :string
     {
         return strtolower(
-            Str::slug(class_basename(get_class($this)))
+            Str::snake(class_basename(get_class($this)))
         );
     }
 }
