@@ -3,15 +3,17 @@
 namespace Carisma;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 trait InteractWithFilters
 {
     /**
      * Get the filters available for the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public static function filters() :array
+    public static function filters(Request $request)
     {
         return [];
     }
@@ -19,15 +21,14 @@ trait InteractWithFilters
     /**
      * Get the filters for the given request.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public static function availableFilters()
+    public static function availableFilters($request)
     {
-        $filters = [];
-        foreach (static::filters() as $filter) {
-            $filters[$filter->name()] = $filter;
-        }
-        return $filters;
+        return collect(static::filters($request))->mapWithKeys(function ($filter) {
+            return [$filter->name() => $filter];
+        })->all();
     }
 
     /**
@@ -40,7 +41,7 @@ trait InteractWithFilters
      */
     public static function applyFilters(Request $request, $query, $filters)
     {
-        $availableFilters = static::availableFilters();
+        $availableFilters = static::availableFilters($request);
 
         foreach ($filters as $name => $value) {
             if(array_key_exists($name, $availableFilters)){

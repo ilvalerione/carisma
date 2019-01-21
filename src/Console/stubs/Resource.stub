@@ -41,9 +41,21 @@ class DummyClass extends CarismaResource
     /**
      * Get the filters available for the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public static function filters(): array
+    public static function filters(Request $request): array
+    {
+        return [];
+    }
+
+    /**
+     * Get the actions available on the entity.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function actions(Request $request)
     {
         return [];
     }

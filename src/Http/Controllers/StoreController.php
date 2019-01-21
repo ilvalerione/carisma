@@ -14,7 +14,7 @@ class StoreController extends Controller
      * @param  CarismaRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function index(CarismaRequest $request)
+    public function handle(CarismaRequest $request)
     {
         $resource = $request->resource();
 

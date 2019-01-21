@@ -15,7 +15,7 @@ class DestroyController extends Controller
      * @param  int $id
      * @return mixed
      */
-    public function index(CarismaRequest $request, $resource, $id)
+    public function handle(CarismaRequest $request, $resource, $id)
     {
         $resource = $request->resource();
 

@@ -96,9 +96,10 @@ class Carisma
     public function routes()
     {
         Route::get('{resource}', 'Carisma\Http\Controllers\PaginateController@index');
-        Route::get('{resource}/{id}', 'Carisma\Http\Controllers\ShowController@index');
-        Route::post('{resource}', 'Carisma\Http\Controllers\StoreController@index');
-        Route::put('{resource}/{id}', 'Carisma\Http\Controllers\UpdateController@index');
-        Route::delete('{resource}/{id}', 'Carisma\Http\Controllers\DestroyController@index');
+        Route::post('{resource}/actions', 'Carisma\Http\Controllers\ActionController@handle');
+        Route::get('{resource}/{id}', 'Carisma\Http\Controllers\ShowController@handle');
+        Route::post('{resource}', 'Carisma\Http\Controllers\StoreController@handle');
+        Route::put('{resource}/{id}', 'Carisma\Http\Controllers\UpdateController@handle');
+        Route::delete('{resource}/{id}', 'Carisma\Http\Controllers\DestroyController@handle');
     }
 }

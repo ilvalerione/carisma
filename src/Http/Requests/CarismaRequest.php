@@ -8,18 +8,6 @@ class CarismaRequest extends FormRequest
 {
     use InteractWithResource;
 
-    public function authorize()
-    {
-        return true;
-    }
-
-    public function rules()
-    {
-        return [
-            //
-        ];
-    }
-
     /**
      * Get filters from params
      *

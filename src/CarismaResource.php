@@ -14,7 +14,8 @@ abstract class CarismaResource extends JsonResource
         PerformValidation,
         PerformSearch,
         FillFields,
-        InteractWithFilters;
+        InteractWithFilters,
+        InteractWithActions;
 
     /**
      * The underlying model resource instance.

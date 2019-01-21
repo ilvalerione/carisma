@@ -16,7 +16,7 @@ class UpdateController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function index(CarismaRequest $request, $resource, $id)
+    public function handle(CarismaRequest $request, $resource, $id)
     {
         $request->findResourceOrFail($id)->authorizeToUpdate($request);
 
