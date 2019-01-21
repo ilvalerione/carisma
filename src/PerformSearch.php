@@ -5,6 +5,16 @@ namespace Carisma;
 
 trait PerformSearch
 {
+    protected static $operators = [
+        'eq' => '=',
+        'neq' => '!=',
+        'gt' => '>',
+        'gte' => '>=',
+        'lt' => '<',
+        'lte' => '<=',
+        'like' => 'like',
+    ];
+
     /**
      * The columns that should be searched.
      *
@@ -15,11 +25,29 @@ trait PerformSearch
     /**
      * Apply search logic to the model
      *
+     * @param \Carisma\Http\Requests\CarismaRequest $request
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function applySearch($request, $query)
+    {
+        foreach ($request->except('search') as $field => $filters){
+            foreach ($filters as $operator => $value) {
+                $query->where($field, static::$operators[$operator], $value);
+            }
+        }
+
+        return static::filterBySearchParam($query, $request->search);
+    }
+
+    /**
+     * Apply search logic to the model
+     *
      * @param  \Illuminate\Database\Eloquent\Builder $query
      * @param string $search
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public static function applySearch($query, $search)
+    public static function filterBySearchParam($query, $search)
     {
         return $query->where(function ($query) use ($search) {
             // If the query string is numeric we filter searching exact correspondence
