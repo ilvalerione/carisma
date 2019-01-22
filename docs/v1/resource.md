@@ -1,26 +1,27 @@
-<?php
+# Resources
 
-namespace DummyNamespace;
+```
+php artisan carisma:resource User
+```
 
-use Carisma\CarismaResource;
-use Carisma\Fields\Field;
-use Illuminate\Http\Request;
 
-class DummyClass extends CarismaResource
+```php
+
+class User extends CarismaResource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = DummyFullModel::class;
+    public static $model = \App\Models\User::class;
 
     /**
-     * Validation rules
+     * The columns that should be searched.
      *
      * @var array
      */
-    public static $search = ['id'];
+    protected static $search = ['name', 'email'];
 
     /**
      * Get the fields displayed by the resource.
@@ -33,7 +34,18 @@ class DummyClass extends CarismaResource
         return [
             Field::make('id')->onlyOnIndex(),
 
-            // Field::make('email')->rules('required', 'email'),
+            Field::make('name')
+                ->rules('required', 'max:255'),
+
+            Field::make('email')
+                ->rules('required', 'max:255', 'email')
+                ->creationRules('unique:users,email'),
+
+            Password::make()
+                ->creationRules('required', 'string', 'min:6', 'confirmed')
+                ->updateRules('nullable', 'string', 'min:6'),
+
+            DateTime::make('email_verified_at')->nullable(),
 
             $this->merge($this->timestamps()),
         ];
@@ -45,10 +57,10 @@ class DummyClass extends CarismaResource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public static function filters(Request $request): array
+    public static function filters(Request $request)
     {
         return [
-            // new MyFilter('name'),
+            // new MostProfitableCustomers(),
         ];
     }
 
@@ -61,7 +73,9 @@ class DummyClass extends CarismaResource
     public static function actions(Request $request)
     {
         return [
-            // new MyAction('name'),
+            // new LogData('log'),
         ];
     }
 }
+
+```

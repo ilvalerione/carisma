@@ -67,11 +67,11 @@ class Carisma
      * Register all of the resource classes in the given directory.
      *
      * @param  string $directory
-     * @return void
+     * @return Carisma
      * @throws CarismaException
      * @throws \ReflectionException
      */
-    public function resourcesIn($directory)
+    public function resourcesIn($directory) : Carisma
     {
         $namespace = app()->getNamespace();
 
@@ -88,6 +88,8 @@ class Carisma
                 $this->addResource($resource);
             }
         }
+
+        return $this;
     }
 
     /**
