@@ -10,7 +10,7 @@ class DummyClass extends Filter
     /**
      * Apply the filter to the given query.
      *
-     * @param  Carisma\Http\Requests\FilterRequest  $request
+     * @param  \Carisma\Http\Requests\FilterRequest  $request
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
