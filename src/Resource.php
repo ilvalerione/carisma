@@ -7,7 +7,7 @@ use Carisma\Http\Requests\CarismaRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-abstract class CarismaResource extends JsonResource
+abstract class Resource extends JsonResource
 {
     use HasHooks,
         Authorizable,

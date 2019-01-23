@@ -3,6 +3,7 @@
 namespace Carisma\Filters;
 
 use Carisma\Http\Requests\FilterRequest;
+use Carisma\Resource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Closure;
@@ -63,6 +64,22 @@ abstract class Filter
         $this->runCallback = $runCallback;
 
         return $this;
+    }
+
+    /**
+     * Indicate that the filter can be accessible when a given authorization ability is available.
+     *
+     * @param  string  $ability
+     * @param  Resource  $resource
+     * @return $this
+     */
+    public function canRunWhen($ability, Resource $resource)
+    {
+        $model = $resource->resource;
+
+        return $this->canRun(function ($request) use ($ability, $model) {
+            return $request->user()->can($ability, $model);
+        });
     }
 
     /**

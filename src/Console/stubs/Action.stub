@@ -2,8 +2,10 @@
 
 namespace DummyNamespace;
 
-use Illuminate\Bus\Queueable;
 use Carisma\Actions\Action;
+use Carisma\Http\Requests\ActionRequest;
+use Illuminate\Bus\Queueable;
+use Illuminate\Support\Collection;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -19,7 +21,7 @@ class DummyClass extends Action
      * @param  \Illuminate\Support\Collection  $models
      * @return mixed
      */
-    public function run($request, $models)
+    public function run(ActionRequest $request, Collection $models)
     {
         //
     }

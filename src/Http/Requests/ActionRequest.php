@@ -26,4 +26,14 @@ class ActionRequest extends CarismaRequest
     {
         return $this->newResource()->availableActions($this);
     }
+
+    /**
+     * Determine if the request is for all resources.
+     *
+     * @return bool
+     */
+    public function isForAllResources()
+    {
+        return !$this->has('ids') || empty($this->ids) || $this->ids == 'all';
+    }
 }

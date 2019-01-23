@@ -2,7 +2,7 @@
 
 namespace Carisma\Fields;
 
-use Carisma\CarismaResource;
+use Carisma\Resource;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -54,10 +54,10 @@ trait Authorization
      * Indicate that the entity can be seen when a given authorization ability is available.
      *
      * @param  string  $ability
-     * @param  CarismaResource  $resource
+     * @param  Resource  $resource
      * @return $this
      */
-    public function canSeeWhen($ability, CarismaResource $resource)
+    public function canSeeWhen($ability, Resource $resource)
     {
         $model = $resource->resource;
 

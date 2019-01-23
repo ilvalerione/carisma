@@ -83,7 +83,7 @@ class Carisma
                     Str::after($resource->getPathname(), app_path().DIRECTORY_SEPARATOR)
                 );
 
-            if (is_subclass_of($resource, CarismaResource::class) &&
+            if (is_subclass_of($resource, Resource::class) &&
                 ! (new ReflectionClass($resource))->isAbstract()) {
                 $this->addResource($resource);
             }

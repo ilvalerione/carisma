@@ -2,7 +2,7 @@
 
 namespace Carisma\Http\Requests;
 
-use Carisma\CarismaResource;
+use Carisma\Resource;
 use Carisma\Facades\Carisma;
 
 trait InteractWithResource
@@ -23,9 +23,9 @@ trait InteractWithResource
      * Get a new instance of the resource being requested.
      *
      * @param null $primaryKey
-     * @return CarismaResource
+     * @return Resource
      */
-    public function newResource($primaryKey = null) : CarismaResource
+    public function newResource($primaryKey = null) : Resource
     {
         $resource = $this->resource();
 

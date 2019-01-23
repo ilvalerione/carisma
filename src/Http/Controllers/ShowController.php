@@ -13,7 +13,7 @@ class ShowController extends Controller
      *
      * @param  CarismaRequest  $request
      * @param  int $id
-     * @return \Carisma\CarismaResource
+     * @return \Carisma\Resource
      */
     public function handle(CarismaRequest $request, $resource, $id)
     {

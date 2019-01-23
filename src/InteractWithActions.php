@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 trait InteractWithActions
 {
     /**
-     * Get the actions available on the entity.
+     * Get the actions available for the resource.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array

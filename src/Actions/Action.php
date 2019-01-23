@@ -5,6 +5,8 @@ namespace Carisma\Actions;
 use Carisma\Http\Requests\ActionRequest;
 use Illuminate\Http\Request;
 use Closure;
+use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 abstract class Action
@@ -50,7 +52,7 @@ abstract class Action
      * @param  \Illuminate\Support\Collection  $models
      * @return mixed
      */
-    abstract public function run($request, $models);
+    abstract public function run(ActionRequest $request, Collection $models);
 
     /**
      * Execute the action for the given request.
@@ -60,29 +62,54 @@ abstract class Action
      */
     public function handleRequest(ActionRequest $request)
     {
-        return $this->run($request, $this->selectedEntities($request));
+        $models = $this->models($request);
+
+        if($models->isEmpty()){
+            return response()
+                ->json(['message' => 'Sorry! You are not authorized to perform this action.'], Response::HTTP_UNAUTHORIZED);
+        }
+
+        return $this->run($request, $this->models($request));
     }
 
     /**
      * Get the selected models for the action declared in "ids" url parameter.
      * If ids is empty will be called "run" passing a raw model instance
      *
-     * @param ActionRequest $request
+     * @param \Carisma\Http\Requests\ActionRequest $request
      * @return mixed
      */
-    protected function selectedEntities(ActionRequest $request)
+    protected function models(ActionRequest $request)
     {
         $model = $request->model();
 
-        if(empty($request->ids)){
-            return $model;
+        if($request->isForAllResources()){
+            $models = $model->all();
+        } else {
+            $models = $model->whereKey(explode(',', $request->ids))->get();
         }
 
-        return $model->whereKey(explode(',', $request->ids))->get();
+        return $this->filterModelsByAuthorization($request, $models);
     }
 
     /**
-     * Set the callback to be run to authorize running the action.
+     * Remove models the user does not have permission to execute the action against.
+     *
+     * @param \Carisma\Http\Requests\ActionRequest $request
+     * @param  \Illuminate\Support\Collection  $models
+     * @return \Illuminate\Support\Collection
+     */
+    protected function filterModelsByAuthorization(ActionRequest $request, Collection $models)
+    {
+        $action = $request->action();
+
+        return $models->filter(function ($model) use ($request, $action) {
+            return $action->authorizedToRun($request, $model);
+        });
+    }
+
+    /**
+     * Set the callback to be run to authorize the action on the given model.
      *
      * @param  \Closure  $runCallback
      * @return $this
@@ -98,11 +125,12 @@ abstract class Action
      * Determine if the action is executable for the given request.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return bool
      */
-    public function authorizedToRun(Request $request)
+    public function authorizedToRun(Request $request, $model)
     {
-        return $this->runCallback ? call_user_func($this->runCallback, $request) : true;
+        return $this->runCallback ? call_user_func($this->runCallback, $request, $model) : true;
     }
 
     /**
@@ -113,7 +141,7 @@ abstract class Action
     protected function humanize() :string
     {
         return strtolower(
-            Str::slug(class_basename(get_class($this)))
+            Str::snake(class_basename(get_class($this)))
         );
     }
 }
