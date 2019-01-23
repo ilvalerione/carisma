@@ -16,7 +16,7 @@ trait Authorization
     public $seeCallback;
 
     /**
-     * Determine if the element should be displayed for the given request.
+     * Determine if the element should be used for the given request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return bool

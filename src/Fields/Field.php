@@ -92,16 +92,16 @@ class Field
     /**
      * Resolve the field's value.
      *
-     * @param mixed $resource
+     * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return mixed
      */
-    public function resolve($resource)
+    public function resolve($model)
     {
         if (is_callable($this->resolveCallback)) {
-            return call_user_func($this->resolveCallback, $resource->{$this->attribute});
+            return call_user_func($this->resolveCallback, $model->{$this->attribute});
         }
 
-        return $resource->{$this->attribute};
+        return $model->{$this->attribute};
     }
 
     /**
