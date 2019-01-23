@@ -1,0 +1,4 @@
+baseURL = "https://www.aventuresrl.com/
+languageCode = "it-it"
+title = "Carisma Backend automation"
+theme = "ananke"
