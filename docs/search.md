@@ -47,7 +47,7 @@ axios.get('users', {
 ]
 ```
 
-!> **Attention:** using multiple operators for the same property result in an implicit AND. 
+?> **Note:** using multiple operators for the same property result in an implicit AND. 
 
 What if the API user wanted to OR the filters instead. i.e. find all items where price 
 is less than 10 OR greater than 100?
