@@ -3,11 +3,11 @@ panel {
     padding: 20px;
 }
 
-.center, center {
+.center {
     text-align: center;
 }
 
-button, .button {
+a.button {
     padding: 10px 20px;
     font-weight: bold;
     background-color: #0056f8;
