@@ -39,6 +39,7 @@ If you would like to define rules that only apply when a resource is being creat
 Field::make('email')
     ->rules('required', 'email', 'max:255')
     ->creationRules('unique:users,email')
-    ->updateRules('unique:users,email')
+    ->updateRules('unique:users,email,{{resource_id}}')
 ```
 
+`{{resource_id}}` string will be replaced with a given resource id sent to update a record. For more information about `unique` validation rule take a look to the official [Laravel documentation](https://laravel.com/docs/5.7/validation#rule-unique).

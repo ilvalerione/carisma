@@ -155,9 +155,9 @@ class Field
             ? call_user_func($this->creationRules, $request)
             : $this->creationRules, ];
 
-        return array_merge_recursive(
+        return $this->formatFieldRules($request, array_merge_recursive(
             $this->getRules($request), $rules
-        );
+        ));
     }
 
     /**
@@ -185,9 +185,9 @@ class Field
             ? call_user_func($this->updateRules, $request)
             : $this->updateRules, ];
 
-        return array_merge_recursive(
+        return $this->formatFieldRules($request, array_merge_recursive(
             $this->getRules($request), $rules
-        );
+        ));
     }
 
     /**
@@ -201,6 +201,30 @@ class Field
         $this->updateRules = ($rules instanceof Rule || is_string($rules)) ? func_get_args() : $rules;
 
         return $this;
+    }
+
+    /**
+     * Perform any final formatting of the given validation rules.
+     *
+     * @param  \Carisma\Http\Requests\CarismaRequest  $request
+     * @param array $rules
+     * @return array
+     */
+    public function formatFieldRules($request, $rules)
+    {
+        $replacements = array_filter([
+            '{{resource_id}}' => $request->id,
+        ]);
+
+        if (empty($replacements)) {
+            return $rules;
+        }
+
+        return collect($rules)->map(function ($rule) use ($replacements){
+            return is_string($rule)
+                ? str_replace(array_keys($replacements), array_values($replacements), $rule)
+                : $rule;
+        })->all();
     }
 
     /**
