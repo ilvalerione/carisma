@@ -9,4 +9,5 @@
 - Tested on the road and bug free
 
 [GitHub](https://github.com/aventure-cloud/carisma/)
-[Get Started](/introduction.md)
+[Get Started](usage/introduction.md)
+
