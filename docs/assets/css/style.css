@@ -1,0 +1,15 @@
+
+panel {
+    padding: 20px;
+}
+
+.center, center {
+    text-align: center;
+}
+
+.button {
+    padding: 10px 20px;
+    font-weight: bold;
+    background-color: #0056f8;
+    color: #ffffff;
+}
