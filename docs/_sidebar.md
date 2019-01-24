@@ -1,12 +1,10 @@
-* [**Home**](/)
-    - [Introduction](introduction.md)
-    - [Search](search.md)
-
+* [**Home**](usage/)
+    - [Introduction](usage/introduction.md)
+    - [Search](usage/search.md)
 * [**Resources**](resources/)
     - [Define Resources](resources/define.md)
     - [Registering Resources](resources/registering.md)
     - [Resource Events](resources/events.md)
-
 * **Fields**
     - [Define Field](fields/define.md)
     - [Show / Hiding Fields](fields/show-hide.md)
@@ -16,19 +14,16 @@
         - [Date](fields/predefined/date.md)
     - [Resolution / Formatting](fields/resolution.md)
     - [Validation](fields/validation.md)
-
 * [**Authorization**](authorization/)
     - [Policies](authorization/policies.md)
     - [Hiding Resource](authorization/hiding-resource.md)
     - [Disabling Authorization](authorization/disabling.md)
     - [Authorizing Fields](authorization/fields.md)
-
 * [**Filters**](filters/)
     - [Define Filter](filters/define.md)
     - [Registering Filter](filters/registering.md)
     - [Run Filter](filters/run.md)
     - [Authorization](filters/authorization.md)
-
 * [**Actions**](actions/)
     - [Define Action](actions/define.md)
     - [Registering Action](actions/registering.md)

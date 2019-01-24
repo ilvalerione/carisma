@@ -16,6 +16,6 @@ Field::make('name')
 	->canSeeWhen('viewProfile', $this),
 ```
 
-> Authorization & The "Can" Method
+> **Authorization & The "Can" Method**
 >
 > To learn more about Laravel's authorization helpers and the `can` method, check out the full Laravel [authorization documentation](https://laravel.com/docs/authorization#via-the-user-model).
