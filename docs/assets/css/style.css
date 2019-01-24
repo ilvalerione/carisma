@@ -4,13 +4,13 @@ panel {
 }
 
 .center {
-    text-align: center;
+    text-align: center !important;
 }
 
 a.button {
     padding: 10px 20px;
     font-weight: bold;
     background-color: #0056f8;
-    color: #ffffff;
+    color: #ffffff !important;
     text-decoration: none;
 }
