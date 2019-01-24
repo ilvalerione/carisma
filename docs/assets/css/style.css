@@ -1,10 +1,14 @@
 
-panel {
-    padding: 20px;
+section {
+    padding: 40px 20px;
 }
 
 .center {
     text-align: center !important;
+}
+
+.mx-auto {
+    margin: 0 auto;
 }
 
 a.button {

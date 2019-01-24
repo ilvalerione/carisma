@@ -4,7 +4,7 @@ Carisma filters allow you to fully customize the underlying resource Eloquent qu
 
 If it sounds complicated, don't worry this is exactly the type of situation filters are designed to solve.
 
-<panel class="center">
-    <a href="./define.md" class="button">Start with filters</a>
-</panel>
+<section class="center">
+    <a href="./define.md" class="button mx-auto">Start with filters</a>
+</section>
 
