@@ -41,6 +41,6 @@ class PostPolicy
 }
 ```
 
-> {warninig} Undefined Policy Methods
->
-> If a policy exists but is missing a method for a particular action, the user will not be allowed to perform that action. So, if you have defined a policy, don't forget to define all of its relevant authorization methods.
+!> Undefined Policy Methods
+!>
+!> If a policy exists but is missing a method for a particular action, the user will not be allowed to perform that action. So, if you have defined a policy, don't forget to define all of its relevant authorization methods.
