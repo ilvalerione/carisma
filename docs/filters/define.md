@@ -75,8 +75,9 @@ class MostValuableUsers extends Filter
 }
 ```
 
-> {info} Columns Method
+> **Columns Method**
 >
 > In this example, the `columns` method has been extracted from the `query` method for readability. It is not "required" and is not a "feature" of lenses.
 
 As you can see in the example above, the `query` method has full control of the Eloquent query used to retrieve the data. The `fields` method may leverage any of Carisma's fields in order to appropriately display the data retrieved by the query.
+
