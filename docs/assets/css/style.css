@@ -7,9 +7,10 @@ panel {
     text-align: center;
 }
 
-.button {
+button, .button {
     padding: 10px 20px;
     font-weight: bold;
     background-color: #0056f8;
     color: #ffffff;
+    text-decoration: none;
 }
