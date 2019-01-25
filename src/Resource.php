@@ -50,6 +50,50 @@ abstract class Resource extends JsonResource
     abstract public function fields(Request $request);
 
     /**
+     * Define the uri path of the resource
+     *
+     * @return mixed
+     */
+    public static function uriKey()
+    {
+        return static::newModel()->getTable();
+    }
+
+
+    /**
+     * Get the underlying model instance for the resource.
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function model()
+    {
+        return $this->resource;
+    }
+
+    /**
+     * Get a fresh instance of the model represented by the resource.
+     *
+     * @return mixed
+     */
+    public static function newModel()
+    {
+        $model = static::$model;
+
+        return new $model;
+    }
+
+    /**
+     * Apply filters to the model
+     *
+     * @param CarismaRequest $request
+     * @return mixed
+     */
+    public static function buildIndexQuery(CarismaRequest $request)
+    {
+        return static::applySearch($request, static::newModel()->newQuery());
+    }
+
+    /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request $request
@@ -86,50 +130,6 @@ abstract class Resource extends JsonResource
         return $this->detailsFields($request)->mapWithKeys(function ($field) {
             return [$field->name => $field->resolve($this)];
         })->all();
-    }
-
-
-    /**
-     * Get the underlying model instance for the resource.
-     *
-     * @return \Illuminate\Database\Eloquent\Model
-     */
-    public function model()
-    {
-        return $this->resource;
-    }
-
-    /**
-     * Get a fresh instance of the model represented by the resource.
-     *
-     * @return mixed
-     */
-    public static function newModel()
-    {
-        $model = static::$model;
-
-        return new $model;
-    }
-
-    /**
-     * Define the uri path of the resource
-     *
-     * @return mixed
-     */
-    public static function uriKey()
-    {
-        return static::newModel()->getTable();
-    }
-
-    /**
-     * Apply filters to the model
-     *
-     * @param CarismaRequest $request
-     * @return mixed
-     */
-    public static function buildIndexQuery(CarismaRequest $request)
-    {
-        return static::applySearch($request, static::newModel()->newQuery());
     }
 
     /**

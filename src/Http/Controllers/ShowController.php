@@ -17,6 +17,10 @@ class ShowController extends Controller
      */
     public function handle(CarismaRequest $request, $resource, $id)
     {
-        return $request->findResourceOrFail($id)->serializeForDetails($request);
+        $resource = $request->findResourceOrFail($id);
+
+        $resource->authorizeToView($request);
+
+        return $resource->serializeForDetails($request);
     }
 }

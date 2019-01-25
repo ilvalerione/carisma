@@ -16,6 +16,7 @@ trait InteractWithResource
     {
         return tap(Carisma::resource($this->resource), function ($resource) {
             abort_if(is_null($resource), 404);
+            abort_if(! $resource::authorizedToViewAny($this), 403);
         });
     }
 

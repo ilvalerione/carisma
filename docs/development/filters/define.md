@@ -23,21 +23,20 @@ use Carisma\Http\Requests\FilterRequest;
 
 class MostValuableUsers extends Filter
 {
+    
     /**
-     * Get the query builder / paginator for the filter.
+     * Apply the filter to the given query.
      *
      * @param  \Carisma\Http\Requests\FilterRequest  $request
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return mixed
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public static function query(FilterRequest $request, $query)
+    public function apply(FilterRequest $request, $query)
     {
-        return $request->withOrdering($request->withFilters(
-            $query->select(self::columns())
+        return $query->select(self::columns())
                   ->join('licenses', 'users.id', '=', 'licenses.user_id')
                   ->orderBy('revenue', 'desc')
                   ->groupBy('users.id', 'users.name')
-        ));
     }
 
     /**

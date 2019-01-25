@@ -20,6 +20,60 @@ trait Authorizable
     }
 
     /**
+     * Determine if the resource should be available for the given request.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return void
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Throwable
+     */
+    public static function authorizeToViewAny(Request $request)
+    {
+        throw_unless(static::authorizedToViewAny($request), AuthorizationException::class);
+    }
+
+    /**
+     * Determine if the resource should be available for the given request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    public static function authorizedToViewAny(Request $request)
+    {
+        if (static::authorizable()) {
+            return Gate::check('viewAny', get_class(static::newModel()));
+        }
+
+        return true;
+    }
+
+    /**
+     * Determine if the current user can view the given resource or throw an exception.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return bool
+     *
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Throwable
+     */
+    public function authorizeToView(Request $request)
+    {
+        return $this->authorizeTo($request, 'view') && $this->authorizeToViewAny($request);
+    }
+
+    /**
+     * Determine if the current user can view the given resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    public function authorizedToView(Request $request)
+    {
+        return $this->authorizedTo($request, 'view') && $this->authorizedToViewAny($request);
+    }
+
+    /**
      * Determine if the current user can create new resources or throw an exception.
      *
      * @param  \Illuminate\Http\Request $request
