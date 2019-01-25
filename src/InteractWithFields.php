@@ -5,7 +5,7 @@ namespace Carisma;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
-trait FillFields
+trait InteractWithFields
 {
     /**
      * Get the fields that are available for the given request.
@@ -15,7 +15,6 @@ trait FillFields
      */
     public function availableFields(Request $request)
     {
-        // todo: iterate al fields to reject not autorized
         return collect($this->filter($this->fields($request)));
     }
 
@@ -29,7 +28,7 @@ trait FillFields
     {
         return $this->availableFields($request)->reject(function ($field) use ($request){
             return ! $field->showOnIndex || ! $field->authorize($request);
-        });
+        })->merge($this->availableRelationships($request));
     }
 
     /**
@@ -42,7 +41,7 @@ trait FillFields
     {
         return $this->availableFields($request)->reject(function ($field) use ($request){
             return ! $field->showOnDetail || ! $field->authorize($request);
-        });
+        })->merge($this->availableRelationships($request));
     }
 
     /**

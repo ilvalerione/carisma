@@ -2,18 +2,18 @@
 
 namespace DummyNamespace;
 
-use Carisma\CarismaResource;
+use Carisma\Resource;
 use Carisma\Fields\Field;
 use Illuminate\Http\Request;
 
-class DummyClass extends CarismaResource
+class DummyClass extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = DummyFullModel::class;
+    public static $model = \DummyFullModel::class;
 
     /**
      * Validation rules

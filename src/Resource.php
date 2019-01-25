@@ -13,9 +13,10 @@ abstract class Resource extends JsonResource
         Authorizable,
         PerformValidation,
         PerformSearch,
-        FillFields,
+        InteractWithFields,
         InteractWithFilters,
-        InteractWithActions;
+        InteractWithActions,
+        ResolvesRelationships;
 
     /**
      * The underlying model resource instance.
@@ -101,9 +102,15 @@ abstract class Resource extends JsonResource
      */
     public function toArray($request)
     {
-        return $this->availableFields($request)->mapWithKeys(function ($field) {
-            return [$field->name => $field->resolve($this)];
-        })->all();
+        return $this->availableFields($request)
+            ->filter(function ($field) use ($request){
+                return $field->authorize($request)
+                    &&
+                    ($this->showOnIndex || $this->showOnDetail);
+            })
+            ->mapWithKeys(function ($field) {
+                return [$field->name => $field->resolve($this->resource)];
+            })->all();
     }
 
     /**
@@ -115,7 +122,7 @@ abstract class Resource extends JsonResource
     public function serializeForIndex($request)
     {
         return $this->indexFields($request)->mapWithKeys(function ($field) {
-            return [$field->name => $field->resolve($this)];
+            return [$field->name => $field->resolve($this->resource)];
         })->all();
     }
 
@@ -128,7 +135,7 @@ abstract class Resource extends JsonResource
     public function serializeForDetails($request)
     {
         return $this->detailsFields($request)->mapWithKeys(function ($field) {
-            return [$field->name => $field->resolve($this)];
+            return [$field->name => $field->resolve($this->resource)];
         })->all();
     }
 

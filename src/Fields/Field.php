@@ -233,10 +233,10 @@ class Field
      * @param  \Carisma\Http\Requests\CarismaRequest  $request
      * @return string
      */
-    public function getValidationAttribute(CarismaRequest $request)
+    /*public function getValidationAttribute(CarismaRequest $request)
     {
         return $this->validationAttribute ?? Str::singular($this->attribute);
-    }
+    }*/
 
     /**
      * Hydrate the given attribute on the model based on the incoming request.

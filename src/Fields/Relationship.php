@@ -34,6 +34,8 @@ class Relationship extends Field
         parent::__construct($name, $attribute);
 
         $this->resourceClass = $resource;
+
+        $this->exceptOnForms();
     }
 
     /**
