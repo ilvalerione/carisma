@@ -1,6 +1,6 @@
 <?php
 
-namespace Carisma\Fields;
+namespace Carisma\Fields\Relationships;
 
 
 class HasMany extends Relationship

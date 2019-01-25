@@ -1,7 +1,6 @@
 <?php
 
-namespace Carisma\Fields;
-
+namespace Carisma\Fields\Relationships;
 
 class HasOne extends Relationship
 {

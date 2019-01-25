@@ -1,8 +1,8 @@
 <?php
 
-namespace Carisma\Fields;
+namespace Carisma\Fields\Relationships;
 
-
+use Carisma\Fields\Field;
 use Illuminate\Http\Request;
 
 class Relationship extends Field
