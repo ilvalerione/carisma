@@ -6,14 +6,16 @@ Each filter are composed of three components:
 - The operator such as eq, lte, gte
 - The filter value
 
-following the structure below:
+All filters declarations need to be sent under `filters` urel query parameter:
 
 ```json
 {
-	"price": {
-		"gte": 10,
-		"lte": 100,
-	}
+    filters: {
+	    "price": {
+		    "gte": 10,
+		    "lte": 100,
+	    }
+    }
 }
 ```
 
@@ -27,10 +29,12 @@ import axios from 'axios'
 
 axios.get('users', {
     params: {
-		price: {
-			gte: 10,
-			lte: 100
-		}
+		filters: {
+            price: {
+				gte: 10,
+				lte: 100
+			}
+        }
 	}
 });
 ```
