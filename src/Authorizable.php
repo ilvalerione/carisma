@@ -54,14 +54,14 @@ trait Authorizable
      * Determine if the current user can view the given resource or throw an exception.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return bool
+     * @return void
      *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      * @throws \Throwable
      */
     public function authorizeToView(Request $request)
     {
-        return $this->authorizeTo($request, 'view') && $this->authorizeToViewAny($request);
+        throw_unless($this->authorizedToView($request), AuthorizationException::class);
     }
 
     /**
