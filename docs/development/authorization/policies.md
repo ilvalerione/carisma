@@ -4,7 +4,7 @@ To limit which users may view, create, update, or delete resources, Carisma leve
 
 When manipulating a resource within Carisma, Carisma will automatically attempt to find a corresponding policy for the model. Typically, these policies will be registered in your application's `AuthServiceProvider`. If Carisma detects a policy has been registered for the model, it will automatically check that policy's relevant authorization methods before performing their respective actions, such as:
 
-- `viewAny` *(todo)*
+- `viewAny`
 - `view`
 - `create`
 - `update`

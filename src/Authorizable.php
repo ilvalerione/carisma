@@ -41,11 +41,13 @@ trait Authorizable
      */
     public static function authorizedToViewAny(Request $request)
     {
-        if (static::authorizable()) {
-            return Gate::check('viewAny', get_class(static::newModel()));
+        if (! static::authorizable()) {
+            return true;
         }
 
-        return true;
+        return method_exists(Gate::getPolicyFor(static::newModel()), 'viewAny')
+            ? Gate::check('viewAny', get_class(static::newModel()))
+            : true;
     }
 
     /**

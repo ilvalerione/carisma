@@ -1,6 +1,8 @@
 # Hiding Entire Resource (not implemented)
 
-If you would like to hide an entire Carisma resource from resource's list, you may define a `viewAny` method on the model's policy class. If no `viewAny` method is defined for a given policy, Carisma will assume that the user can view the resource:
+If you would like to hide an entire Carisma resource from resource's list, you may define a `viewAny` method on the model's policy class. 
+
+Since when you create a fresh policy class using artisan command `make:policy --model=YourModel` there's no `viewAny` method by default if no `viewAny` method is defined for a given policy, Carisma will assume that the user can view the resource:
 
 ```php
 <?php
