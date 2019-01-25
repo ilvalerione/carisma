@@ -1,4 +1,4 @@
-# Hiding Entire Resource (not implemented)
+# Hiding Entire Resource
 
 If you would like to hide an entire Carisma resource from resource's list, you may define a `viewAny` method on the model's policy class. 
 
