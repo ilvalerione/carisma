@@ -31,7 +31,7 @@ class DummyClass extends Resource
     public function fields(Request $request)
     {
         return [
-            Field::make('id')->onlyOnIndex(),
+            Field::make('id')->exceptOnForms(),
 
             // Field::make('email')->rules('required', 'email'),
 

@@ -105,8 +105,8 @@ abstract class Resource extends JsonResource
         return $this->availableFields($request)
             ->filter(function ($field) use ($request){
                 return $field->authorize($request)
-                    &&
-                    ($this->showOnIndex || $this->showOnDetail);
+                    ||
+                    ($field->showOnIndex || $field->showOnDetail);
             })
             ->mapWithKeys(function ($field) {
                 return [$field->name => $field->resolve($this->resource)];
