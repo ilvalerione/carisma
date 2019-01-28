@@ -5,7 +5,7 @@ namespace Carisma\Http\Middlewares;
 
 use Carisma\Facades\Carisma;
 
-class Authenticate
+class Authorize
 {
     /**
      * Handle the incoming request.

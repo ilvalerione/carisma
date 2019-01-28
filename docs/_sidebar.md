@@ -5,6 +5,8 @@
     - [Custom Filters](usage/filters.md)
     - [Relationships](usage/relationships.md)
 * **Development**
+* [**Requirements**](development/getting-started/requirements.md)
+* [**Authorizing Carisma**](development/getting-started/authorizing.md)
 * [**Resources**](development/resources/)
     * [Define Resources](development/resources/define.md)
     * [Registering Resources](development/resources/registering.md)

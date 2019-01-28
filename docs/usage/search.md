@@ -14,8 +14,6 @@ The `filter` query parameter is reserved for filtering data. Each constraint is 
 - The operators such as eq, lte, gte
 - The filter value
 
-All constraint declarations need to be sent under `filter` query parameter:
-
 ```json
 {
     filter: {

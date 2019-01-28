@@ -4,7 +4,7 @@ namespace Carisma;
 
 use Carisma\Events\ServingCarisma;
 use Carisma\Exceptions\CarismaException;
-use Carisma\Http\Middlewares\Authenticate;
+use Carisma\Http\Middlewares\Authorize;
 use Carisma\Http\Middlewares\ServeCarisma;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
@@ -146,7 +146,7 @@ class Carisma
     public function routes()
     {
         Route::middleware([
-            Authenticate::class,
+            Authorize::class,
             ServeCarisma::class,
         ])->group(function (){
             Route::get('{resource}/filters/{filter}', 'Carisma\Http\Controllers\FilterController@handle');
