@@ -76,7 +76,7 @@ class Field
     public function __construct($name = null, $attribute = null)
     {
         $this->name = $name ?: $this->humanize();
-        $this->attribute = $attribute ?: $name;
+        $this->attribute = $attribute ?: $this->name;
     }
 
     /**

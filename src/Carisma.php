@@ -63,7 +63,7 @@ class Carisma
     public static function authCheck($request)
     {
         return (static::$authUsing ?: function () {
-            return false;
+            return true;
         })($request);
     }
 
@@ -146,8 +146,8 @@ class Carisma
     public function routes()
     {
         Route::middleware([
-            ServeCarisma::class,
             Authenticate::class,
+            ServeCarisma::class,
         ])->group(function (){
             Route::get('{resource}/filters/{filter}', 'Carisma\Http\Controllers\FilterController@handle');
             Route::post('{resource}/actions/{action}', 'Carisma\Http\Controllers\ActionController@handle');

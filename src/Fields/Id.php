@@ -3,7 +3,7 @@
 namespace Carisma\Fields;
 
 
-class ID extends Field
+class Id extends Field
 {
     /**
      * ID field constructor.
@@ -11,7 +11,7 @@ class ID extends Field
      * @param string $name
      * @param string $attribute
      */
-    public function __construct(string $name, string $attribute = null)
+    public function __construct($name = null, $attribute = null)
     {
         parent::__construct($name, $attribute);
 

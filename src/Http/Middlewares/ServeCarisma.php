@@ -2,7 +2,6 @@
 
 namespace Carisma\Http\Middlewares;
 
-
 use Carisma\Events\ServingCarisma;
 
 class ServeCarisma
