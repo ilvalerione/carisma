@@ -37,9 +37,9 @@ public function mapApiRoutes()
 }
 ```
 
-> Thanks to this structure you can easliy mixin your personal api implementation with APIs generated from Carisma.
+> Thanks to this structure you can easily mixin your personal api implementation with APIs generated from Carisma.
 
-Once your resources are registered with Carisma, they will be available via routes:
+Once your resources are registered they will be available via routes:
 
 ```shell
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" http://hostname/users

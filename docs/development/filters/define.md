@@ -52,25 +52,6 @@ class MostValuableUsers extends Filter
             DB::raw('sum(licenses.price) as revenue'),
         ];
     }
-
-    /**
-     * Get the fields available to the filter.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
-     */
-    public function fields(Request $request)
-    {
-        return [
-            Field::make('id'),
-            Field::make('name'),
-
-            Field::make('revenue')
-            	->resolveUsing(function ($value) {
-                    return '$'.number_format($value, 2);
-                }),
-        ];
-    }
 }
 ```
 

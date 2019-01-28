@@ -16,3 +16,26 @@ public static function filters(Request $request)
     ];
 }
 ```
+
+# Personalize Url Path
+
+By default Carisma use the "snake_case" version of the class name to compose the url path to reach your filter. You can pass a custom name to the Filter constructor to personalize the url path:
+
+```php
+use App\Carisma\Fitlers\MostValuableUsers;
+
+/**
+ * Get the filters available for the resource.
+ *
+ * @param  \Illuminate\Http\Request $request
+ * @return array
+ */
+public static function filters(Request $request)
+{
+    return [
+        // Filter path become "users/filters/valuable"
+    	new MostValuableUsers('valuable'),
+    ];
+}
+```
+

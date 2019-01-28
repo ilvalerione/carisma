@@ -5,6 +5,9 @@ Each Carisma resource contains a `fields` method. This method returns an array o
 To add a field to a resource, we can simply add it to the resource's `fields` method. Typically, fields may be created using their static `make` method. This method accepts several arguments; however, you usually only need to pass the "human readable" name of the field. Carisma will automatically use the "snake case" of the class name to determine the underlying database column:
 
 ```php
+use Carisma\Fields\Field;
+use Carisma\Fields\Id;
+
 /**
  * Get the fields displayed by the resource.
  *
@@ -14,7 +17,7 @@ To add a field to a resource, we can simply add it to the resource's `fields` me
 public function fields(Request $request)
 {
     return [
-        Field::make('id')->exceptOnForms(),
+        Id::make(),
 
         Field::make('name')
         	->rules('required', 'string', 'max:255'),

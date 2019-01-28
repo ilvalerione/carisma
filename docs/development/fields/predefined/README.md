@@ -2,9 +2,12 @@
 
 Carisma ships with a variety of field types. So, let's explore all of the available types and their options:
 
+- Id
 - Password
 - DateTime
 - Date
+
+[ ](id.md ':include')
 
 [ ](password.md ':include')
 
