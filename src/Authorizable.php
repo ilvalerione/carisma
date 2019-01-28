@@ -84,9 +84,9 @@ trait Authorizable
      * @throws \Illuminate\Auth\Access\AuthorizationException
      * @throws \Throwable
      */
-    public static function authorizeToCreate(Request $request)
+    public function authorizeToCreate(Request $request)
     {
-        throw_unless(static::authorizedToCreate($request), AuthorizationException::class);
+        throw_unless($this->authorizedToCreate($request), AuthorizationException::class);
     }
 
     /**
@@ -95,7 +95,7 @@ trait Authorizable
      * @param  \Illuminate\Http\Request  $request
      * @return bool
      */
-    public static function authorizedToCreate(Request $request)
+    public function authorizedToCreate(Request $request)
     {
         if (static::authorizable()) {
             return Gate::check('create', get_class(static::newModel()));

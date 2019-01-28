@@ -4,7 +4,9 @@ namespace Carisma\Http\Controllers;
 
 
 use Carisma\Http\Requests\CarismaRequest;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 
 class DestroyController extends Controller
 {
@@ -12,19 +14,18 @@ class DestroyController extends Controller
      * Remove the specified resource from storage.
      *
      * @param CarismaRequest $request
-     * @param  int $id
      * @return mixed
      */
-    public function handle(CarismaRequest $request, $resource, $id)
+    public function handle(CarismaRequest $request)
     {
-        $resource = $request->resource();
+        $resource = $request->findResourceOrFail();
 
-        $request->findResourceOrFail($id)->authorizeToDelete($request);
+        $resource->authorizeToDelete($request);
 
-        $instance = $request->model()->findOrFail($id);
+        DB::transaction(function () use ($request, $resource){
+            $resource->resource->delete();
+        });
 
-        $instance->delete();
-
-        return (new $resource($instance))->serializeForDetails($request);
+        return response()->json([], Response::HTTP_NO_CONTENT);
     }
 }

@@ -47,7 +47,7 @@ trait InteractWithResource
     {
         $resource = $this->resource();
 
-        return new $resource($this->model()->findOrFail($primaryKey ?? $this->id));
+        return new $resource($this->model()->findOrFail($primaryKey ?? $this->route('id')));
     }
 
     /**

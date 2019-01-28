@@ -2,7 +2,6 @@
 
 namespace Carisma\Http\Controllers;
 
-
 use Carisma\Http\Requests\CarismaRequest;
 use Illuminate\Routing\Controller;
 

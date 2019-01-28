@@ -5,6 +5,7 @@ namespace Carisma\Http\Controllers;
 
 use Carisma\Http\Requests\CarismaRequest;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 
 class UpdateController extends Controller
 {
@@ -12,24 +13,22 @@ class UpdateController extends Controller
      * Update the specified resource in storage.
      *
      * @param  CarismaRequest $request
-     * @param $resource
-     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function handle(CarismaRequest $request, $resource, $id)
+    public function handle(CarismaRequest $request)
     {
-        $request->findResourceOrFail($id)->authorizeToUpdate($request);
+        $resource = $request->findResourceOrFail();
 
-        $resource = $request->resource();
+        $resource->authorizeToUpdate($request);
 
-        $resource::validateForUpdate($request);
+        $resource->validateForUpdate($request);
 
-        $model = $resource::newModel()->findOrFail($id);
+        DB::transaction(function () use ($request, $resource) {
+            $model = $resource->resource;
+            $resource->fillForUpdate($request, $model);
+            $model->save();
+        });
 
-        $resource::fillForUpdate($request, $model);
-
-        $model->save();
-
-        return $request->newResource($id)->serializeForDetails($request);
+        return $resource->serializeForDetails($request);
     }
 }

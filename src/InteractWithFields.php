@@ -51,11 +51,11 @@ trait InteractWithFields
      * @param  \Illuminate\Database\Eloquent\Model $model
      * @return mixed
      */
-    public static function fillForCreate(Request $request, $model)
+    public function fillForCreate(Request $request, $model)
     {
-        static::fillFields(
+        $this->fillFields(
             $request, $model,
-            (new static($model))->creationFields($request)
+            $this->creationFields($request)
         );
 
         return $model;
@@ -68,12 +68,12 @@ trait InteractWithFields
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return mixed
      */
-    public static function fillForUpdate(Request $request, $model)
+    public function fillForUpdate(Request $request, $model)
     {
-        static::fillFields(
+        $this->fillFields(
             $request,
             $model,
-            (new static($model))->updateFields($request)
+            $this->updateFields($request)
         );
 
         return $model;
@@ -87,7 +87,7 @@ trait InteractWithFields
      * @param  \Illuminate\Support\Collection  $fields
      * @return void
      */
-    protected static function fillFields(Request $request, $model, $fields)
+    protected function fillFields(Request $request, $model, $fields)
     {
         $fields->map->fill($request, $model);
     }
