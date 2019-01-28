@@ -1,21 +1,57 @@
 # Resource Events
 
-All Carisma operations use Eloquent model of the resource so are available all native events you are familiar with. Therefore, it is easy to listen for CRUD events triggered by Carisma and react to them. You have dedicated hooks in your resource for each CRUD event.
+All Carisma operations use Eloquent model of the resource so are available all native events you are familiar with. Therefore, it is easy to listen for model events triggered by Carisma and react to them. The easiest approach is to simply attach a [model observer](https://laravel.com/docs/eloquent#observers) to a model:
 
 ```php
-// Fired when update and create resource 
-public static function onSaving(CarismaRequest $request, Model $model)
-public static function onSaved(CarismaRequest $request, Model $model)
-    
-public static function onCreating(CarismaRequest $request, Model $model)
-public static function onCreated(CarismaRequest $request, Model $model)
+namespace App\Providers;
 
-public static function onUpdating(CarismaRequest $request, Model $model)
-public static function onUpdated(CarismaRequest $request, Model $model)
+use App\User;
+use App\Observers\UserObserver;
+use Illuminate\Support\ServiceProvider;
 
-public static function onDeleting(CarismaRequest $request, Model $model)
-public static function onDeleted(CarismaRequest $request, Model $model)
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        User::observe(UserObserver::class);
+    }
+
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
+}
 ```
 
-You are free to override this methods to attach fire actions to the CRUD operations.
+If you would like to attach any observer **only during** Carisma related HTTP requests, you may register observers within `Carisma::serving` event listener in your application's `EventServiceProvider`. This listener will only be executed during Carisma requests:
+
+```php
+use App\User;
+use Carisma\Facades\Carisma;
+use App\Observers\CarismaUserObserver;
+
+/**
+ * Bootstrap any application services.
+ *
+ * @return void
+ */
+public function boot()
+{
+    parent::boot();
+
+    Carisma::serving(function () {
+        User::observe(CarismaUserObserver::class);
+    });
+}
+```
 

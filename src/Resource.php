@@ -9,8 +9,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 abstract class Resource extends JsonResource
 {
-    use HasHooks,
-        Authorizable,
+    use Authorizable,
         PerformValidation,
         PerformSearch,
         InteractWithFields,

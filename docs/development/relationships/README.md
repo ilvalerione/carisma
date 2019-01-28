@@ -14,7 +14,7 @@ use App\Carisma\Post;
  * @param  \Illuminate\Http\Request  $request
  * @return array
  */
-public function relationship(Request $request)
+public function relationships(Request $request)
 {
     return [
     	HasMany::make('posts', Post::class),

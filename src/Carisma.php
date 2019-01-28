@@ -2,7 +2,11 @@
 
 namespace Carisma;
 
+use Carisma\Events\ServingCarisma;
 use Carisma\Exceptions\CarismaException;
+use Carisma\Http\Middlewares\Authenticate;
+use Carisma\Http\Middlewares\ServeCarisma;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Finder\Finder;
 use Illuminate\Support\Str;
@@ -18,6 +22,50 @@ class Carisma
     protected $resources = [
         // 'uri_key' => ResourceClass::class
     ];
+
+    /**
+     * The callback that should be used to authenticate Carisma users.
+     *
+     * @var \Closure
+     */
+    protected static $authUsing;
+
+    /**
+     * Register an event listener for the Carisma "serving" event.
+     *
+     * @param  \Closure|string  $callback
+     * @return void
+     */
+    public static function serving($callback)
+    {
+        Event::listen(ServingCarisma::class, $callback);
+    }
+
+    /**
+     * Register the Carisma authentication callback.
+     *
+     * @param  \Closure  $callback
+     * @return static
+     */
+    public static function auth($callback)
+    {
+        static::$authUsing = $callback;
+
+        return new static;
+    }
+
+    /**
+     * Determine if the given request can access the Carisma API.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    public static function authCheck($request)
+    {
+        return (static::$authUsing ?: function () {
+            return false;
+        })($request);
+    }
 
     /**
      * Register list of resources.
@@ -97,15 +145,20 @@ class Carisma
      */
     public function routes()
     {
-        Route::get('{resource}/filters/{filter}', 'Carisma\Http\Controllers\FilterController@handle');
-        Route::post('{resource}/actions/{action}', 'Carisma\Http\Controllers\ActionController@handle');
+        Route::middleware([
+            ServeCarisma::class,
+            Authenticate::class,
+        ])->group(function (){
+            Route::get('{resource}/filters/{filter}', 'Carisma\Http\Controllers\FilterController@handle');
+            Route::post('{resource}/actions/{action}', 'Carisma\Http\Controllers\ActionController@handle');
 
-        Route::get('{resource}', 'Carisma\Http\Controllers\PaginateController@index');
-        Route::get('{resource}/{id}', 'Carisma\Http\Controllers\ShowController@handle');
-        Route::get('{resource}/{id}/relationships/{relationship}', 'Carisma\Http\Controllers\RelationshipController@handle');
+            Route::get('{resource}', 'Carisma\Http\Controllers\PaginateController@index');
+            Route::get('{resource}/{id}', 'Carisma\Http\Controllers\ShowController@handle');
+            Route::get('{resource}/{id}/relationships/{relationship}', 'Carisma\Http\Controllers\RelationshipController@handle');
 
-        Route::post('{resource}', 'Carisma\Http\Controllers\StoreController@handle');
-        Route::put('{resource}/{id}', 'Carisma\Http\Controllers\UpdateController@handle');
-        Route::delete('{resource}/{id}', 'Carisma\Http\Controllers\DestroyController@handle');
+            Route::post('{resource}', 'Carisma\Http\Controllers\StoreController@handle');
+            Route::put('{resource}/{id}', 'Carisma\Http\Controllers\UpdateController@handle');
+            Route::delete('{resource}/{id}', 'Carisma\Http\Controllers\DestroyController@handle');
+        });
     }
 }

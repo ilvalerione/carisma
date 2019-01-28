@@ -2,13 +2,14 @@
 
 Before resources are accessible via API endpoints, they must first be registered with Carisma. Resources are typically registered in your `app/Providers/RouteServiceProvider.php` file. This file typically contains various configuration and bootstrapping code related to your application's routes.
 
-**In this way you can access to the APIs built with carisma under any url's prefix, middleware, namespace you want.**
+**In this way you can access to the APIs built with carisma under any prefix, middleware, namespace you want.**
 
 There are two approaches to registering resources. You may use the `resourcesIn` method to instruct Carisma to register all Carisma resources within a given directory. Alternatively, you may use the `resources` method to manually register individual resources:
 
 ```php
 use App\Carisma\User;
 use App\Carisma\Post;
+use Carisma\Facades\Carisma;
 
 /**
  * Register the application's Carisma resources.
@@ -23,11 +24,11 @@ public function mapApiRoutes()
             Route::namespace($this->namespace)
                 ->group(base_path('routes/api.php'));
 
-            // 1 - Register all resources in the given directory
+            // Option 1 - Register all resources in the given directory
             Carisma::resourcesIn(app_path('Carisma'))
                 ->routes();
             
-            // 2 - Register individual resource 
+            // Option 2 - Register resources by hand
             Carisma::resources([
                 User::class,
                 Post::class,

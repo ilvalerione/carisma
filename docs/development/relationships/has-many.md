@@ -1,11 +1,22 @@
 # HasMany
 
-The `HasMany` field corresponds to a situation where a resource is connected with many otems of another resource. For example, let's assume a `User`model `Has Many` `Post` models. We may add the relationship to our `User` Nova resource like so:
+The `HasMany` field corresponds to a situation where a resource is connected with many items of another resource. For example, let's assume a `User`model `Has Many` `Post` models related. We may add the relationship to our `User` Carisma resource like so:
 
 ```php
 use Carisma\Fields\Relationships\HasMany;
 use App\Carisma\Post;
 
-HasMany::make('posts', Post::class)
+/**
+ * Get the relationships available for the resource.
+ *
+ * @param  \Illuminate\Http\Request  $request
+ * @return array
+ */
+public function relationships(Request $request)
+{
+    return [
+    	HasMany::make('posts', Post::class),
+    ];
+}
 ```
 

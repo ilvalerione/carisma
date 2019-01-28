@@ -24,11 +24,7 @@ class StoreController extends Controller
 
         $model = $resource::fillForCreate($request, $resource::newModel());
 
-        $resource::onSaving($request, $model);
-        $resource::onCreating($request, $model);
         $model->save();
-        $resource::onCreated($request, $model);
-        $resource::onSaved($request, $model);
 
         return $request->newResource($model->id)->serializeForDetails($request);
     }

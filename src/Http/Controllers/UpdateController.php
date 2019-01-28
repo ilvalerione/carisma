@@ -28,11 +28,7 @@ class UpdateController extends Controller
 
         $resource::fillForUpdate($request, $model);
 
-        $resource::onSaving($request, $model);
-        $resource::onUpdating($request, $model);
         $model->save();
-        $resource::onUpdated($request, $model);
-        $resource::onSaved($request, $model);
 
         return $request->newResource($id)->serializeForDetails($request);
     }
