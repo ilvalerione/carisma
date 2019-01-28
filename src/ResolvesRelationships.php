@@ -39,7 +39,7 @@ trait ResolvesRelationships
      */
     public function resolvesIncludedRelationships($request)
     {
-        $requiredRelationships = explode(',', $request->input('include'));
+        $requiredRelationships = explode(',', $request->query('include'));
 
         return $this->availableRelationships($request)
             ->reject(function ($relationship) use ($requiredRelationships) {

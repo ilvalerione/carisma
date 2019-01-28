@@ -30,15 +30,15 @@ trait PerformSearch
      */
     public static function applySearch($request, $query)
     {
-        if(!empty($request->input('filters'))) {
-            foreach ($request->input('filters') as $field => $filters) {
+        if(!empty($request->query('filters'))) {
+            foreach ($request->query('filters') as $field => $filters) {
                 foreach ($filters as $operator => $value) {
                     $query->where($field, static::$operators[$operator], $value);
                 }
             }
         }
 
-        return static::filterBySearchParam($query, $request->search);
+        return static::filterBySearchParam($query, $request->query('search'));
     }
 
     /**
@@ -66,7 +66,6 @@ trait PerformSearch
             foreach (static::searchableColumns() as $column) {
                 $query->orWhere($model->qualifyColumn($column), $likeOperator, '%' . $search . '%');
             }
-
         });
     }
 

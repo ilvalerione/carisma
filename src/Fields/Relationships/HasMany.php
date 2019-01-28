@@ -13,6 +13,8 @@ class HasMany extends Relationship
      */
     public function resolve($model)
     {
-        return $this->resourceClass::collection($model->{$this->attribute});
+        return $this->resourceClass::collection(
+            $this->resourceClass::buildIndexQuery(app('request'), $model->{$this->attribute}())->get()
+        );
     }
 }

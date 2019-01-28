@@ -86,12 +86,13 @@ abstract class Resource extends JsonResource
     /**
      * Apply filters to the model
      *
-     * @param CarismaRequest $request
+     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Database\Eloquent\Builder $query
      * @return mixed
      */
-    public static function buildIndexQuery(CarismaRequest $request)
+    public static function buildIndexQuery(Request $request, $query = null)
     {
-        return static::applySearch($request, static::newModel()->newQuery());
+        return static::applySearch($request, $query ?: static::newModel()->newQuery());
     }
 
     /**
@@ -105,7 +106,7 @@ abstract class Resource extends JsonResource
         return $this->availableFields($request)
             ->filter(function ($field) use ($request){
                 return $field->authorize($request)
-                    ||
+                    &&
                     ($field->showOnIndex || $field->showOnDetail);
             })
             ->mapWithKeys(function ($field) {
