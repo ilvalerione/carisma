@@ -2,6 +2,7 @@
     - [Introduction](usage/introduction.md)
     - [Authorizitation](usage/authorization.md)
     - [Search](usage/search.md)
+    - [Relationships](usage/relationships.md)
 * **Development**
 * [**Resources**](development/resources/)
     * [Define Resources](development/resources/define.md)
@@ -31,7 +32,7 @@
     - [Registering Action](development/actions/registering.md)
     - [Run Action](development/actions/run.md)
     - [Authorization Action](development/actions/authorization.md)
-* [**Relashionships**](development/relationships)
+* [**Relashionships**](development/relationships/)
     * [HasOne](development/relationships/has-one.md)
     * [HasMany](development/relationships/has-many.md)
 
