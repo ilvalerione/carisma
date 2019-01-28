@@ -22,17 +22,6 @@ class Password extends Field
     public $showOnDetail = false;
 
     /**
-     * Password constructor.
-     *
-     * @param null|string $name
-     * @param null|string $attribute
-     */
-    public function __construct($name = null, $attribute = null)
-    {
-        parent::__construct($name ?: 'password', $attribute);
-    }
-
-    /**
      * Hydrate the given attribute on the model based on the incoming request.
      *
      * @param  \Illuminate\Http\Request  $request

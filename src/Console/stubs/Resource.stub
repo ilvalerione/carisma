@@ -4,6 +4,7 @@ namespace DummyNamespace;
 
 use Carisma\Resource;
 use Carisma\Fields\Field;
+use Carisma\Fields\ID;
 use Illuminate\Http\Request;
 
 class DummyClass extends Resource
@@ -31,11 +32,24 @@ class DummyClass extends Resource
     public function fields(Request $request)
     {
         return [
-            Field::make('id')->exceptOnForms(),
+            ID::make(),
 
-            // Field::make('email')->rules('required', 'email'),
+            Field::make('name')->rules('required', 'string'),
 
             $this->merge($this->timestamps()),
+        ];
+    }
+
+    /**
+     * Get the relationships available for the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function relationship(Request $request)
+    {
+        return [
+            // HasMany::make('posts', Post::class),
         ];
     }
 

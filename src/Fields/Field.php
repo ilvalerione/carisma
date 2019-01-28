@@ -73,9 +73,9 @@ class Field
      * @param string $name
      * @param string $attribute
      */
-    public function __construct($name, $attribute = null)
+    public function __construct($name = null, $attribute = null)
     {
-        $this->name = $name;
+        $this->name = $name ?: $this->humanize();
         $this->attribute = $attribute ?: $name;
     }
 
@@ -293,5 +293,17 @@ class Field
         if($request->exists($this->attribute)){
             $model->{$this->attribute} = $request[$this->attribute];
         }
+    }
+
+    /**
+     * Humanize the class name into a string.
+     *
+     * @return string
+     */
+    protected function humanize() :string
+    {
+        return strtolower(
+            Str::snake(class_basename(get_class($this)))
+        );
     }
 }

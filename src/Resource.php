@@ -123,7 +123,7 @@ abstract class Resource extends JsonResource
     {
         return $this->indexFields($request)->mapWithKeys(function ($field) {
             return [$field->name => $field->resolve($this->resource)];
-        })->all();
+        })->merge($this->resolvesIncludedRelationships($request))->all();
     }
 
     /**
@@ -136,7 +136,7 @@ abstract class Resource extends JsonResource
     {
         return $this->detailsFields($request)->mapWithKeys(function ($field) {
             return [$field->name => $field->resolve($this->resource)];
-        })->all();
+        })->merge($this->resolvesIncludedRelationships($request))->all();
     }
 
     /**

@@ -28,7 +28,7 @@ trait InteractWithFields
     {
         return $this->availableFields($request)->reject(function ($field) use ($request){
             return ! $field->showOnIndex || ! $field->authorize($request);
-        })->merge($this->availableRelationships($request));
+        });
     }
 
     /**
@@ -41,7 +41,7 @@ trait InteractWithFields
     {
         return $this->availableFields($request)->reject(function ($field) use ($request){
             return ! $field->showOnDetail || ! $field->authorize($request);
-        })->merge($this->availableRelationships($request));
+        });
     }
 
     /**

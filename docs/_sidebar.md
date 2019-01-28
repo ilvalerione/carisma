@@ -31,3 +31,7 @@
     - [Registering Action](development/actions/registering.md)
     - [Run Action](development/actions/run.md)
     - [Authorization Action](development/actions/authorization.md)
+* [**Relashionships**](development/relationships)
+    * [HasOne](development/relationships/has-one.md)
+    * [HasMany](development/relationships/has-many.md)
+
