@@ -49,7 +49,7 @@ abstract class Filter
      *
      * @param  \Carisma\Http\Requests\FilterRequest  $request
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Support\Collection
      */
     abstract public function apply(FilterRequest $request, $query);
 

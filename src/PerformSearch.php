@@ -38,7 +38,9 @@ trait PerformSearch
             }
         }
 
-        return static::filterBySearchParam($query, $request->query('search'));
+        return empty($request->query('search'))
+            ? $query
+            : static::filterBySearchParam($query, $request->query('search'));
     }
 
     /**
