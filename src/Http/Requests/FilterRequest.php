@@ -13,7 +13,7 @@ class FilterRequest extends CarismaRequest
     public function filter()
     {
         return $this->availableFilters()->first(function ($filter) {
-            return $filter->name() == $this->query('filter');
+            return $filter->name() == $this->route('filter');
         }) ?: abort(404);
     }
 

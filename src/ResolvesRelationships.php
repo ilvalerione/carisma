@@ -12,7 +12,7 @@ trait ResolvesRelationships
      * @param  \Illuminate\Http\Request $request
      * @return array
      */
-    public function relationship(Request $request)
+    public function relationships(Request $request)
     {
         return [];
     }
@@ -25,7 +25,7 @@ trait ResolvesRelationships
      */
     public function availableRelationships($request)
     {
-        return collect($this->filter($this->relationship($request)))
+        return collect($this->filter($this->relationships($request)))
             ->reject(function ($relationship) use ($request) {
                 return !$relationship->authorize($request);
             });
@@ -50,14 +50,13 @@ trait ResolvesRelationships
     }
 
     /**
-     * @param  \Illuminate\Http\Request $request
+     * Resolve given relationship instance
+     *
+     * @param  \Carisma\Fields\Relationships\Relationship $relationship
      * @return mixed
      */
-    public function resolvesRelationship($request)
+    public function resolvesRelationship($relationship)
     {
-        return $this->availableRelationships($request)
-            ->first(function ($relationship) use ($request) {
-                return $relationship->name == $request->relationship;
-            })->resolve($this->resource);
+        return $relationship->resolve($this->resource);
     }
 }

@@ -13,7 +13,7 @@ class ActionRequest extends CarismaRequest
     public function action()
     {
         return $this->availableActions()->first(function ($action) {
-            return $action->name() == $this->query('action');
+            return $action->name() == $this->route('action');
         }) ?: abort(404);
     }
 

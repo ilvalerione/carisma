@@ -97,8 +97,8 @@ class Carisma
      */
     public function routes()
     {
-        Route::get('{resource}/filters', 'Carisma\Http\Controllers\FilterController@handle');
-        Route::post('{resource}/actions', 'Carisma\Http\Controllers\ActionController@handle');
+        Route::get('{resource}/filters/{filter}', 'Carisma\Http\Controllers\FilterController@handle');
+        Route::post('{resource}/actions/{action}', 'Carisma\Http\Controllers\ActionController@handle');
 
         Route::get('{resource}', 'Carisma\Http\Controllers\PaginateController@index');
         Route::get('{resource}/{id}', 'Carisma\Http\Controllers\ShowController@handle');

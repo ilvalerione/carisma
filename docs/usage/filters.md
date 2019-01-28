@@ -5,12 +5,14 @@ You may want to list of all your application's users sorted by their total lifet
 With Carisma your backend can store a specific filtering strategy onto a resource that you can invoke with a direct url:
 
 ```javascript
-axios.get('users/filters?filter=by-revenue')
+axios.get('users/filters/by-revenue')
 ```
 
-The backend developer need to provide you the name of all custom filters available for each resource. By default your filter result can be searched using standard `search` query parameter:
+The backend developer need to provide you the name of all custom filters available for each resource. 
+
+By default you can apply search on your filter's result using standard `search` query parameter:
 
 ```javascript
-axios.get('users/filters?filter=by-revenue&search=ca')
+axios.get('users/filters/by-revenue?search=ca')
 ```
 
