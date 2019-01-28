@@ -2,6 +2,7 @@
     - [Introduction](usage/introduction.md)
     - [Authorizitation](usage/authorization.md)
     - [Search](usage/search.md)
+    - [Custom Filters](usage/filters.md)
     - [Relationships](usage/relationships.md)
 * **Development**
 * [**Resources**](development/resources/)

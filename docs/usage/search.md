@@ -1,16 +1,24 @@
 # Search
 
-Each filter are composed of three components:
+The `search` query parameter is reserved to apply generic search to a resource collection.
 
-- The property or field name
-- The operator such as eq, lte, gte
+```javascript
+axios.get('users?search=ca')
+```
+
+# Filter
+
+The `filter` query parameter is reserved for filtering data. Each constraint is composed of three components:
+
+- The property name
+- The operators such as eq, lte, gte
 - The filter value
 
-All filters declarations need to be sent under `filters` urel query parameter:
+All constraint declarations need to be sent under `filter` query parameter:
 
 ```json
 {
-    filters: {
+    filter: {
 	    "price": {
 		    "gte": 10,
 		    "lte": 100,
@@ -19,17 +27,14 @@ All filters declarations need to be sent under `filters` urel query parameter:
 }
 ```
 
-The ability to combine multiple filters allow you to implement complex query 
-on every column in the DB's table.
-
-Many HTTP client easily encode nested JSON objects into url query structure:
+The ability to combine multiple constraints allow you to implement complex query. Many HTTP client easily encode nested JSON objects into query parameters:
 
 ```javascript
 import axios from 'axios'
 
 axios.get('users', {
     params: {
-		filters: {
+		filter: {
             price: {
 				gte: 10,
 				lte: 100
@@ -56,4 +61,4 @@ axios.get('users', {
 What if the API user wanted to OR the filters instead. i.e. find all items where price 
 is less than 10 OR greater than 100?
 
-You can use [custom filters](filters/) to develop more complex data extraction.
+You can use [custom filters](filters.md) to develop more complex data extraction.
