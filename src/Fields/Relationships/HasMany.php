@@ -8,24 +8,18 @@ use Illuminate\Http\Request;
 class HasMany extends Relationship
 {
     /**
-     * Create a new Relationship field.
+     * Resolve the field's value.
      *
-     * @param  string  $name
-     * @param  string|null  $resource
-     * @param  string|null  $attribute
-     * @return void
+     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @return mixed
      */
-    public function __construct(string $name, string $resource, string $attribute = null)
+    public function resolve($model)
     {
-        // Using callback as attribute for underlying Field class
-        // It will be considered automatically as a Computed Field.
-        parent::__construct($name, $resource, function($model) use ($attribute){
-            return $this->resourceClass::collection(
-                $this->resourceClass::buildIndexQuery(
-                    resolve(Request::class),
-                    $model->{$attribute}() // <- Query builder
-                )->get()
-            );
-        });
+        return $this->resourceClass::collection(
+            $this->resourceClass::buildIndexQuery(
+                resolve(Request::class),
+                $model->{$this->attribute}()
+            )->get()
+        );
     }
 }

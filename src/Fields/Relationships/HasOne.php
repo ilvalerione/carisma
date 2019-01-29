@@ -5,19 +5,13 @@ namespace Carisma\Fields\Relationships;
 class HasOne extends Relationship
 {
     /**
-     * Create a new Relationship field.
+     * Resolve the field's value.
      *
-     * @param  string  $name
-     * @param  string|null  $resource
-     * @param  string|null  $attribute
+     * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return void
      */
-    public function __construct(string $name, string $resource, string $attribute = null)
+    public function resolve($model)
     {
-        // Using callback as attribute for underlying Field class
-        // It will be considered automatically as a Computed Field.
-        parent::__construct($name, $resource, function ($model) use ($attribute) {
-            return new $this->resourceClass($model->{$attribute});
-        });
+        $this->value = new $this->resourceClass($model->{$this->attribute});
     }
 }

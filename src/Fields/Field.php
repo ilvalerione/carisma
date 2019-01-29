@@ -120,10 +120,10 @@ class Field implements JsonSerializable
         }
 
         if (is_callable($this->resolveCallback)) {
-            $this->value = call_user_func($this->resolveCallback, $model->{$this->attribute});
+            return $this->value = call_user_func($this->resolveCallback, $model->{$attribute});
         }
 
-        $this->value = $model->{$this->attribute};
+        $this->value = $model->{$attribute};
     }
 
     /**

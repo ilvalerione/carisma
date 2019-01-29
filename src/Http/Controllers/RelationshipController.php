@@ -10,6 +10,6 @@ class RelationshipController extends Controller
     public function handle(RelationshipRequest $request)
     {
         return $request->findResourceOrFail()
-            ->resolvesRelationship($request->relationship());
+            ->resolvesRelationship($request->relationship())->value;
     }
 }
