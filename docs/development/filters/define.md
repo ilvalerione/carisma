@@ -37,6 +37,7 @@ class MostValuableUsers extends Filter
                   ->join('licenses', 'users.id', '=', 'licenses.user_id')
                   ->orderBy('revenue', 'desc')
                   ->groupBy('users.id', 'users.name')
+            	  ->paginate()
     }
 
     /**

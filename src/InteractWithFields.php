@@ -15,23 +15,21 @@ trait InteractWithFields
      */
     public function availableFields(Request $request)
     {
-        return $this->resolveFields(
-            $request, collect($this->filter($this->fields($request)))
-        );
+        return collect($this->filter($this->fields($request)))
+            ->reject(function ($field) use ($request) {
+                return !$field->authorize($request);
+            });
     }
 
     /**
      * Resolve the given fields to their values.
      *
-     * @param  \Illuminate\Http\Request $request
      * @param  \Illuminate\Support\Collection $fields
      * @return \Illuminate\Support\Collection
      */
-    protected function resolveFields(Request $request, Collection $fields)
+    protected function resolveFields(Collection $fields)
     {
-        return $fields->reject(function ($field) use ($request) {
-            return !$field->authorize($request);
-        })->each(function ($field) {
+        return $fields->each(function ($field) {
             $field->resolve($this->resource);
         });
     }
@@ -44,7 +42,7 @@ trait InteractWithFields
      */
     public function indexFields($request)
     {
-        return $this->availableFields($request)
+        return $this->resolveFields($this->availableFields($request))
             ->reject(function ($field) use ($request) {
                 return !$field->showOnIndex;
             });
@@ -58,7 +56,7 @@ trait InteractWithFields
      */
     public function detailsFields($request)
     {
-        return $this->availableFields($request)
+        return $this->resolveFields($this->availableFields($request))
             ->reject(function ($field) use ($request) {
                 return !$field->showOnDetail;
             });

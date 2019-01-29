@@ -6,5 +6,5 @@ Carisma is designed to guarantee really great performance to suite enterprise ne
 
 In a modern software environment RESTful web service is the **key factor** to raise your technology infrastructure and business ability to the next level. In this context Carisma was born to completely remove the highest cost when a company need to adopt this development strategy: 
 
-> The cost of human resources needed for long months of development.
+> You can avoid the cost of human resources needed for loooong months of development.
 

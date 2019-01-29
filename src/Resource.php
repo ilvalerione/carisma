@@ -147,8 +147,8 @@ abstract class Resource extends JsonResource
     protected function timestamps()
     {
         return [
-            DateTime::make('created_at'),
-            DateTime::make('updated_at'),
+            DateTime::make('created_at')->nullable(),
+            DateTime::make('updated_at')->nullable(),
         ];
     }
 
@@ -159,6 +159,6 @@ abstract class Resource extends JsonResource
      */
     protected function softDelete()
     {
-        return DateTime::make('deleted_at');
+        return DateTime::make('deleted_at')->nullable();
     }
 }
