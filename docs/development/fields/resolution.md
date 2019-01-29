@@ -7,3 +7,4 @@ Field::make('name')->resolveUsing(function ($value) {
 	return ucfirst($value);
 }),
 ```
+
