@@ -3,18 +3,29 @@
 namespace Carisma\Fields\Relationships;
 
 
+use Illuminate\Http\Request;
+
 class HasMany extends Relationship
 {
     /**
-     * Resolve the field's value.
+     * Create a new Relationship field.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return mixed
+     * @param  string  $name
+     * @param  string|null  $resource
+     * @param  string|null  $attribute
+     * @return void
      */
-    public function resolve($model)
+    public function __construct(string $name, string $resource, string $attribute = null)
     {
-        return $this->resourceClass::collection(
-            $this->resourceClass::buildIndexQuery(app('request'), $model->{$this->attribute}())->get()
-        );
+        // Using callback as attribute for underlying Field class
+        // It will be considered automatically as a Computed Field.
+        parent::__construct($name, $resource, function($model) use ($attribute){
+            return $this->resourceClass::collection(
+                $this->resourceClass::buildIndexQuery(
+                    resolve(Request::class),
+                    $model->{$attribute}() // <- Query builder
+                )->get()
+            );
+        });
     }
 }

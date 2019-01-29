@@ -6,6 +6,7 @@
     - [Relationships](usage/relationships.md)
 * **Development**
 * [**Requirements**](development/getting-started/requirements.md)
+* [**Introduction**](development/getting-started/introduction.md)
 * [**Authorizing Carisma**](development/getting-started/authorizing.md)
 * [**Resources**](development/resources/)
     * [Define Resources](development/resources/define.md)

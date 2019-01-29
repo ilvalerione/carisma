@@ -45,18 +45,8 @@ trait ResolvesRelationships
             ->reject(function ($relationship) use ($requiredRelationships) {
                 return !in_array($relationship->name, $requiredRelationships);
             })->mapWithKeys(function ($relationship) {
-                return [$relationship->name => $relationship->resolve($this->resource)];
+                $relationship->resolve($this->resource);
+                return $relationship->jsonSerialize();
             });
-    }
-
-    /**
-     * Resolve given relationship instance
-     *
-     * @param  \Carisma\Fields\Relationships\Relationship $relationship
-     * @return mixed
-     */
-    public function resolvesRelationship($relationship)
-    {
-        return $relationship->resolve($this->resource);
     }
 }

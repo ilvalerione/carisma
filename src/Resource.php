@@ -109,7 +109,7 @@ abstract class Resource extends JsonResource
                     ($field->showOnIndex || $field->showOnDetail);
             })
             ->mapWithKeys(function ($field) {
-                return [$field->name => $field->resolve($this->resource)];
+                return $field->jsonSerialize();
             })->all();
     }
 
@@ -122,7 +122,7 @@ abstract class Resource extends JsonResource
     public function serializeForIndex($request)
     {
         return $this->indexFields($request)->mapWithKeys(function ($field) {
-            return [$field->name => $field->resolve($this->resource)];
+            return $field->jsonSerialize();
         })->merge($this->resolvesIncludedRelationships($request))->all();
     }
 
@@ -135,7 +135,7 @@ abstract class Resource extends JsonResource
     public function serializeForDetails($request)
     {
         return $this->detailsFields($request)->mapWithKeys(function ($field) {
-            return [$field->name => $field->resolve($this->resource)];
+            return $field->jsonSerialize();
         })->merge($this->resolvesIncludedRelationships($request))->all();
     }
 

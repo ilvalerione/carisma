@@ -24,6 +24,7 @@ Like other types of fields, relationship fields will automatically "snake case" 
 
 ```php
 use Carisma\Fields\Relationships\HasOne;
+use App\Carisma\Address;
 
 HasOne::make('indirizzo', Address::class, 'address')
 ```

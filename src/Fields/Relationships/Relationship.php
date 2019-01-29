@@ -15,14 +15,7 @@ class Relationship extends Field
     protected $resourceClass;
 
     /**
-     * The URI key of the related resource.
-     *
-     * @var string
-     */
-    public $resourceName;
-
-    /**
-     * Create a new field.
+     * Create a new Relationship field.
      *
      * @param  string  $name
      * @param  string|null  $resource

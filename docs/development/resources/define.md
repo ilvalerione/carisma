@@ -44,6 +44,19 @@ class User extends Resource
     }
 
     /**
+     * Get the relationships available for the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function relationships(Request $request)
+    {
+        return [
+            // HasMany::make('posts', Post::class),
+        ];
+    }
+
+    /**
      * Get the filters available for the resource.
      *
      * @param  \Illuminate\Http\Request  $request

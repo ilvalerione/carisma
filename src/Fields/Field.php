@@ -6,8 +6,10 @@ use Carisma\Http\Requests\CarismaRequest;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Closure;
+use JsonSerializable;
 
-class Field
+class Field implements JsonSerializable
 {
     use DisplayOptions, Authorization;
 
@@ -23,14 +25,14 @@ class Field
      *
      * @var string
      */
-    protected $attribute;
+    public $attribute;
 
     /**
      * The field's resolved value.
      *
      * @var mixed
      */
-    protected $value;
+    public $value;
 
     /**
      * The callback to be used to resolve the field's value.
@@ -71,12 +73,12 @@ class Field
      * Field constructor.
      *
      * @param string $name
-     * @param string $attribute
+     * @param string|callable $attribute
      */
     public function __construct($name = null, $attribute = null)
     {
-        $this->name = $name ?: $this->humanize();
-        $this->attribute = $attribute ?: $this->name;
+        $this->name = $name ?? $this->humanize();
+        $this->attribute = $attribute ?? $this->name;
     }
 
     /**
@@ -90,18 +92,38 @@ class Field
     }
 
     /**
+     * Prepare the field for JSON serialization.
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [$this->name => $this->value];
+    }
+
+    /**
      * Resolve the field's value.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return mixed
+     * @return void
      */
     public function resolve($model)
     {
-        if (is_callable($this->resolveCallback)) {
-            return call_user_func($this->resolveCallback, $model->{$this->attribute});
+        $attribute = $this->attribute;
+
+        // If is a computed field
+        if ($attribute instanceof Closure
+            ||
+            (is_callable($attribute) && is_object($attribute))
+        ) {
+            return $this->value = $attribute($model);
         }
 
-        return $model->{$this->attribute};
+        if (is_callable($this->resolveCallback)) {
+            $this->value = call_user_func($this->resolveCallback, $model->{$this->attribute});
+        }
+
+        $this->value = $model->{$this->attribute};
     }
 
     /**
