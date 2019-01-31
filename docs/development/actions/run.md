@@ -20,7 +20,7 @@ public static function actions(Request $request)
 }
 ```
 
-If `resources` parameter is not exists or is empty the action will be performed on the entire database result-set for the given resource. In this case I recommend you to `chunk` the given collection:
+If `resources` is equal to `all` the action will be performed on the entire database result for the given resource. In this case I recommend you to `chunk` the given collection:
 
 ```php
 /**
@@ -41,3 +41,21 @@ public function run(ActionRequest $request, Collection $models)
     });
 }
 ```
+
+If `resources` parameter is not exists or is empty the action will receive a collection with just one empty model:
+
+```php
+/**
+ * Perform the action on the given models.
+ *
+ * @param  \Carisma\Http\Requests\ActionRequest  $request
+ * @param  \Illuminate\Support\Collection  $models
+ * @return mixed
+ */
+public function run(ActionRequest $request, Collection $models)
+{
+    // $models contain jun one empty model
+    return $models->first();
+}
+```
+

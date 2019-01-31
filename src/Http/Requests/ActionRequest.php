@@ -34,6 +34,11 @@ class ActionRequest extends CarismaRequest
      */
     public function isForAllResources()
     {
-        return !$this->has('ids') || empty($this->ids) || $this->ids == 'all';
+        return $this->ids == 'all';
+    }
+
+    public function isGenericResourceAction()
+    {
+        return !$this->has('ids') || empty($this->ids) || $this->ids == 'generic';
     }
 }

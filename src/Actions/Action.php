@@ -82,12 +82,15 @@ abstract class Action
      * If ids is empty will be called "run" passing a raw model instance
      *
      * @param \Carisma\Http\Requests\ActionRequest $request
-     * @return mixed
+     * @return \Illuminate\Support\Collection
      */
     protected function models(ActionRequest $request)
     {
         $model = $request->model();
 
+        if($request->isGenericResourceAction()){
+            return collect([$model]);
+        }
         if ($request->isForAllResources()) {
             $models = $model->all();
         } else {
