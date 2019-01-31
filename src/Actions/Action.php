@@ -109,10 +109,8 @@ abstract class Action
      */
     protected function filterModelsByAuthorization(ActionRequest $request, Collection $models)
     {
-        $action = $request->action();
-
-        return $models->filter(function ($model) use ($request, $action) {
-            return $action->authorizedToRun($request, $model);
+        return $models->filter(function ($model) use ($request) {
+            return $this->authorizedToRun($request, $model);
         });
     }
 

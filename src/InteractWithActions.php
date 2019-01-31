@@ -26,11 +26,8 @@ trait InteractWithActions
      */
     public static function availableActions($request)
     {
-        return collect(static::actions($request))
-            ->filter
-            ->authorizedToRun($request)
-            ->mapWithKeys(function ($action) {
-                return [$action->name() => $action];
-            });
+        return collect(static::actions($request))->mapWithKeys(function ($action) {
+            return [$action->name() => $action];
+        });
     }
 }
