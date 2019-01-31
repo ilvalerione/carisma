@@ -6,6 +6,7 @@ Carisma ships with a variety of field types. So, let's explore all of the availa
 - Password
 - DateTime
 - Date
+- File
 
 [ ](id.md ':include')
 
@@ -16,4 +17,6 @@ Carisma ships with a variety of field types. So, let's explore all of the availa
 [ ](date.md ':include')
 
 [ ](shortcut.md ':include')
+
+[ ](file.md ':include')
 
