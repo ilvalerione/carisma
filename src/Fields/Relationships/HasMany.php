@@ -2,7 +2,6 @@
 
 namespace Carisma\Fields\Relationships;
 
-
 use Illuminate\Http\Request;
 
 class HasMany extends Relationship
@@ -15,11 +14,15 @@ class HasMany extends Relationship
      */
     public function resolve($model)
     {
-        return $this->resourceClass::collection(
+        $request = resolve(Request::class);
+
+        $this->value = $this->resourceClass::collection(
             $this->resourceClass::buildIndexQuery(
-                resolve(Request::class),
-                $model->{$this->attribute}()
+                $request,
+                $model->{$this->attribute}() // <- query builder
             )->get()
-        );
+        )->map(function ($resource) use ($request){
+            return $resource->serializeForIndex($request);
+        });
     }
 }

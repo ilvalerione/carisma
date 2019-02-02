@@ -2,6 +2,8 @@
 
 namespace Carisma\Fields\Relationships;
 
+use Illuminate\Http\Request;
+
 class HasOne extends Relationship
 {
     /**
@@ -12,6 +14,7 @@ class HasOne extends Relationship
      */
     public function resolve($model)
     {
-        $this->value = new $this->resourceClass($model->{$this->attribute});
+        $this->value = (new $this->resourceClass($model->{$this->attribute}))
+            ->serializeForDetails(resolve(Request::class));
     }
 }

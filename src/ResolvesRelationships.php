@@ -49,17 +49,4 @@ trait ResolvesRelationships
                 return $relationship->jsonSerialize();
             });
     }
-
-    /**
-     * Resolve a given relationship
-     *
-     * @param \Carisma\Fields\Relationships\Relationship $relationship
-     * @return mixed
-     */
-    public function resolvesRelationship($relationship)
-    {
-        return tap($relationship, function ($relationship){
-            $relationship->resolve($this->resource);
-        });
-    }
 }

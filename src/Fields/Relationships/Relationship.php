@@ -18,15 +18,15 @@ class Relationship extends Field
      * Create a new Relationship field.
      *
      * @param  string  $name
-     * @param  string|null  $resource
+     * @param  string|null  $resourceClass
      * @param  string|null  $attribute
      * @return void
      */
-    public function __construct($name, $resource, $attribute = null)
+    public function __construct($name, $resourceClass, $attribute = null)
     {
         parent::__construct($name, $attribute);
 
-        $this->resourceClass = $resource;
+        $this->resourceClass = $resourceClass;
     }
 
     /**
