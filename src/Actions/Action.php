@@ -128,6 +128,21 @@ abstract class Action
     }
 
     /**
+     * Authorize the action on the given model based on resource gate permission.
+     *
+     * @param  string $ability
+     * @return $this
+     */
+    public function canRunWhen($ability)
+    {
+        $this->canRun(function ($request, $model) use ($ability) {
+            return $request->user()->can($ability, $model);
+        });
+
+        return $this;
+    }
+
+    /**
      * Determine if the action is executable for the given request.
      *
      * @param  \Illuminate\Http\Request $request
