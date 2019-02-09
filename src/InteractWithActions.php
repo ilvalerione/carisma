@@ -13,7 +13,7 @@ trait InteractWithActions
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public static function actions(Request $request)
+    public function actions(Request $request)
     {
         return [];
     }
@@ -24,9 +24,9 @@ trait InteractWithActions
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Support\Collection
      */
-    public static function availableActions($request)
+    public function availableActions($request)
     {
-        return collect(static::actions($request))->mapWithKeys(function ($action) {
+        return collect($this->actions($request))->mapWithKeys(function ($action) {
             return [$action->name() => $action];
         });
     }

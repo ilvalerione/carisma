@@ -12,7 +12,7 @@ trait InteractWithFilters
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public static function filters(Request $request)
+    public function filters(Request $request)
     {
         return [];
     }
@@ -23,9 +23,9 @@ trait InteractWithFilters
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Support\Collection
      */
-    public static function availableFilters($request)
+    public function availableFilters($request)
     {
-        return collect(static::filters($request))
+        return collect($this->filters($request))
             ->filter
             ->authorizedToRun($request)
             ->mapWithKeys(function ($filter) {

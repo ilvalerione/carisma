@@ -19,3 +19,24 @@ public static function actions(Request $request)
     ];
 }
 ```
+
+In the example above, we are using Laravel's `Authorizable` trait's `can` method on our `User` model to determine if the authorized user is authorized for the `emailAnyAccountProfile` action. However, since proxying to authorization policy methods is a common use-case for `canRun`, you may use the `canRunWhen` method to achieve the same behavior passing only the name of the ability to check:
+
+```php
+/**
+ * Get the actions available for the resource.
+ *
+ * @param  \Illuminate\Http\Request $request
+ * @return array
+ */
+public static function actions(Request $request)
+{
+    return [
+        (new EmailAccountProfile)->canRunWhen('emailAnyAccountProfile'),
+    ];
+}
+```
+
+> Authorization & The "Can" Method
+>
+> To learn more about Laravel's authorization helpers and the `can` method, check out the full Laravel [authorization documentation](https://laravel.com/docs/authorization#via-the-user-model).
