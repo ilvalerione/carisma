@@ -59,7 +59,7 @@ class DummyClass extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public static function filters(Request $request): array
+    public function filters(Request $request): array
     {
         return [
             // new MyFilter('name'),
@@ -72,7 +72,7 @@ class DummyClass extends Resource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public static function actions(Request $request)
+    public function actions(Request $request)
     {
         return [
             // new MyAction('name'),
