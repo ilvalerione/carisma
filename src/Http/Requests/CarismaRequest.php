@@ -35,10 +35,10 @@ class CarismaRequest extends FormRequest
      *
      * @return array|mixed
      */
-    /*public function getFilters()
+    public function getFilters()
     {
-        return $this->has('filters')
-            ? is_string($this->filters) ? json_decode($this->filters, true) : $this->filters
+        return $this->has('filter')
+            ? is_string($this->filter) ? json_decode($this->filter, true) : $this->filter
             : [];
-    }*/
+    }
 }

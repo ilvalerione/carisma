@@ -30,11 +30,9 @@ trait PerformSearch
      */
     public static function applySearch($request, $query)
     {
-        if(!empty($request->query('filter'))) {
-            foreach ($request->query('filter') as $field => $constraints) {
-                foreach ($constraints as $operator => $value) {
-                    $query->where($field, static::$operators[$operator], $value);
-                }
+        foreach ($request->getFilters() as $field => $constraints) {
+            foreach ($constraints as $operator => $value) {
+                $query->where($field, static::$operators[$operator], $value);
             }
         }
 
