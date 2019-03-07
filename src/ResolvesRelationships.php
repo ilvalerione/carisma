@@ -44,9 +44,7 @@ trait ResolvesRelationships
                 return $item->name == $request->route('relationship');
             });
 
-        $relationship->resolve($request, $this->resource);
-
-        return $relationship->jsonSerialize();
+        return tap($relationship)->resolve($request, $this->resource);
     }
 
     /**

@@ -128,7 +128,7 @@ class Field implements JsonSerializable
     /**
      * Define the callback that should be used to resolve the field's value.
      *
-     * @param  callable  $resolveCallback($modelAttribute)
+     * @param  callable  $resolveCallback($request, $modelAttribute)
      * @return $this
      */
     public function resolveUsing(callable $resolveCallback)

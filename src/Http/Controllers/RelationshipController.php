@@ -10,7 +10,7 @@ class RelationshipController extends Controller
     public function get(RelationshipRequest $request)
     {
         return $request->findResourceOrFail()
-            ->resolvesRelationship($request);
+            ->resolvesRelationship($request)->value;
     }
 
     public function attach(RelationshipRequest $request)
