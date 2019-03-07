@@ -1,5 +1,7 @@
 <?php
 
 return [
-    "namespace" => 'Carisma'
+
+    'namespace' => 'Carisma',
+
 ];

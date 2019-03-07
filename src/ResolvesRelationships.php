@@ -37,6 +37,24 @@ trait ResolvesRelationships
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Support\Collection
      */
+    public function resolvesRelationship($request)
+    {
+        $relationship = $this->availableRelationships($request)
+            ->first(function ($item) use ($request) {
+                return $item->name == $request->route('relationship');
+            });
+
+        $relationship->resolve($request, $this->resource);
+
+        return $relationship->jsonSerialize();
+    }
+
+    /**
+     * Get the relationships to include in the response
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Support\Collection
+     */
     public function resolvesIncludedRelationships($request)
     {
         $requiredRelationships = explode(',', $request->query('include'));
@@ -44,8 +62,8 @@ trait ResolvesRelationships
         return $this->availableRelationships($request)
             ->reject(function ($relationship) use ($requiredRelationships) {
                 return !in_array($relationship->name, $requiredRelationships);
-            })->mapWithKeys(function ($relationship) {
-                $relationship->resolve($this->resource);
+            })->mapWithKeys(function ($relationship) use ($request) {
+                $relationship->resolve($request, $this->resource);
                 return $relationship->jsonSerialize();
             });
     }

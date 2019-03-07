@@ -104,10 +104,11 @@ class Field implements JsonSerializable
     /**
      * Resolve the field's value.
      *
+     * @param  \Illuminate\Http\Request $request
      * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return void
      */
-    public function resolve($model)
+    public function resolve($request, $model)
     {
         $attribute = $this->attribute;
 
@@ -116,14 +117,12 @@ class Field implements JsonSerializable
             ||
             (is_callable($attribute) && is_object($attribute))
         ) {
-            return $this->value = $attribute($model);
+            $this->value = $attribute($model);
+        } else if (is_callable($this->resolveCallback)) {
+            $this->value = call_user_func($this->resolveCallback, $request, $model->{$attribute});
+        } else {
+            $this->value = $model->{$attribute};
         }
-
-        if (is_callable($this->resolveCallback)) {
-            return $this->value = call_user_func($this->resolveCallback, $model->{$attribute});
-        }
-
-        $this->value = $model->{$attribute};
     }
 
     /**

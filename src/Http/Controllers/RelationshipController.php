@@ -7,9 +7,29 @@ use Illuminate\Routing\Controller;
 
 class RelationshipController extends Controller
 {
-    public function handle(RelationshipRequest $request)
+    public function get(RelationshipRequest $request)
     {
         return $request->findResourceOrFail()
-            ->resolvesRelationship($request->relationship())->value;
+            ->resolvesRelationship($request);
+    }
+
+    public function attach(RelationshipRequest $request)
+    {
+        $request->findResourceOrFail();
+    }
+
+    public function detach(RelationshipRequest $request)
+    {
+        $request->findResourceOrFail();
+    }
+
+    public function sync(RelationshipRequest $request)
+    {
+        $request->findResourceOrFail();
+    }
+
+    public function toggle(RelationshipRequest $request)
+    {
+        $request->findResourceOrFail();
     }
 }

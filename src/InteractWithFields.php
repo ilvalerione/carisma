@@ -24,13 +24,14 @@ trait InteractWithFields
     /**
      * Resolve the given fields to their values.
      *
+     * @param  \Illuminate\Http\Request $request
      * @param  \Illuminate\Support\Collection $fields
      * @return \Illuminate\Support\Collection
      */
-    protected function resolveFields(Collection $fields)
+    protected function resolveFields($request, Collection $fields)
     {
-        return $fields->each(function ($field) {
-            $field->resolve($this->resource);
+        return $fields->each(function ($field) use ($request) {
+            $field->resolve($request, $this->resource);
         });
     }
 
@@ -42,7 +43,7 @@ trait InteractWithFields
      */
     public function indexFields($request)
     {
-        return $this->resolveFields($this->availableFields($request))
+        return $this->resolveFields($request, $this->availableFields($request))
             ->reject(function ($field) use ($request) {
                 return !$field->showOnIndex;
             });
@@ -56,7 +57,7 @@ trait InteractWithFields
      */
     public function detailsFields($request)
     {
-        return $this->resolveFields($this->availableFields($request))
+        return $this->resolveFields($request, $this->availableFields($request))
             ->reject(function ($field) use ($request) {
                 return !$field->showOnDetail;
             });

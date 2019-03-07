@@ -31,7 +31,7 @@ class Date extends Field
     {
         parent::__construct($name, $attribute);
 
-        $this->resolveUsing(function ($value) {
+        $this->resolveUsing(function ($request, $value) {
             if($this->nullable && !$value){
                 return null;
             }

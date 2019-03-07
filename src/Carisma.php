@@ -154,7 +154,12 @@ class Carisma
 
             Route::get('{resource}', 'Carisma\Http\Controllers\PaginateController@index');
             Route::get('{resource}/{id}', 'Carisma\Http\Controllers\ShowController@handle');
-            Route::get('{resource}/{id}/relationships/{relationship}', 'Carisma\Http\Controllers\RelationshipController@handle');
+
+            Route::get('{resource}/{id}/relationships/{relationship}', 'Carisma\Http\Controllers\RelationshipController@get');
+            Route::post('{resource}/{id}/relationships/{relationship}/attach', 'Carisma\Http\Controllers\RelationshipController@attach');
+            Route::post('{resource}/{id}/relationships/{relationship}/detach', 'Carisma\Http\Controllers\RelationshipController@detach');
+            Route::post('{resource}/{id}/relationships/{relationship}/sync', 'Carisma\Http\Controllers\RelationshipController@sync');
+            Route::post('{resource}/{id}/relationships/{relationship}/toggle', 'Carisma\Http\Controllers\RelationshipController@toggle');
 
             Route::post('{resource}', 'Carisma\Http\Controllers\StoreController@handle');
             Route::put('{resource}/{id}', 'Carisma\Http\Controllers\UpdateController@handle');
