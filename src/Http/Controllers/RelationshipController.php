@@ -13,7 +13,7 @@ class RelationshipController extends Controller
             ->resolvesRelationship($request)->value;
     }
 
-    public function attach(RelationshipRequest $request)
+    /*public function attach(RelationshipRequest $request)
     {
         $request->findResourceOrFail();
     }
@@ -31,5 +31,5 @@ class RelationshipController extends Controller
     public function toggle(RelationshipRequest $request)
     {
         $request->findResourceOrFail();
-    }
+    }*/
 }
